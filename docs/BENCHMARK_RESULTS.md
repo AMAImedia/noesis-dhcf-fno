@@ -1,161 +1,157 @@
 <!-- NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
 Copyright (c) 2026 AMAImedia.com
 All rights reserved.
-Full path: noesis-dhcf-fno/docs/BENCHMARK_RESULTS.md -->
+Full path: docs/BENCHMARK_RESULTS.md
+Version: v1.1 (2026-03-07) — adds real Phase R.1 GPU results
+Supersedes: v1.0 (synthetic pipeline evaluation only) -->
 
 # Phase-R Benchmark Results
 
-**Research Reproducibility Dashboard**  
-*Phase-R Extended: 5 seeds × 9 genres = 45 tracks*  
-*Pipeline: `phase_r_synthetic.py` — deterministic offline evaluation*
+**Research Reproducibility Dashboard**
+*NOESIS DHCF-FNO v1.3 — Deterministic AI Music Generation + Mastering*
 
 ---
 
-## Experimental Setup
+## Phase R.1 — Real GPU Results (2026-03-07)
 
 ```
-Framework:    NOESIS DHCF-FNO v0.9
-model_type:   noesis_dhcf_fno
-Backend:      Frozen DiT (2.4B parameters, bfloat16, fix_nfe=8)
-Hardware:     RTX 4090 24GB (reference), RTX 3060 6GB laptop (verified)
-Python:       3.11 (embedded CPython)
-CUDA:         deterministic (CUBLAS_WORKSPACE_CONFIG=:4096:8)
-RNG lock:     torch + numpy + python (order-sensitive — Appendix F)
-Seeds:        42, 123, 777, 1337, 9999  (5 evaluation seeds)
-Tracks:       45 (5 seeds × 9 genres)
+Framework:    NOESIS DHCF-FNO v1.3 (mastering_chain.py v1.3)
+Model:        ACE-Step v1.5 Turbo DiT (2.4B params, bfloat16, fix_nfe=8)
+Text enc.:    Qwen3-Embedding-0.6B (595M params, hidden=1024)
+Lyric enc.:   acestep-5Hz-lm-0.6B (662M params, vocab=217204, CPU offload)
+Hardware:     CUDA GPU (bfloat16)
+Python:       3.11.9 (embedded CPython)
+IQS:          v0.8 (α=0.50 β=0.08 γ=0.07 δ=0.06 η=0.25 ζ=0.04)
+Snapshot:     v16 (Merkle tree + crypto audit trail)
+Mode:         studio  |  Seeds: 42 (×9 genres), 99 (ambient 60s)
 ```
 
----
+### Per-Genre Results (seed=42, 30s tracks)
 
-## Benchmark Dataset: Phase-R Extended
-
-| Property | Value |
-|---|---|
-| Genres | 9 (Ambient, Classical, EDM, Hip-Hop, Jazz, Lo-Fi, Metal, Neurofunk, Pop) |
-| Seeds | 5 (42, 123, 777, 1337, 9999) |
-| Total tracks | **45** |
-| Duration | 30 s per track |
-| Determinism | 99/99 SHA-256 identical |
-
----
-
-## Results (mean over 5 seeds)
-
-| Genre     | IQS v0.8 (mean) | LUFS   | Drift (dB) | UTMOS ↑ | DNSMOS-OVRL ↑ |
-|-----------|---------|--------|-----------|---------|--------------|
-| Ambient   | 0.7398  | −14.3  | 0.0000    | 3.672   | 3.581        |
-| Classical | 0.7631  | −16.1  | 0.0000    | 3.729   | 3.638        |
-| Lo-Fi     | 0.7135  | −13.7  | 0.0000    | 3.814   | 3.723        |
-| Jazz      | 0.7673  | −14.1  | 0.0000    | 3.495   | 3.411        |
-| Pop       | 0.6984  | −11.8  | 0.0000    | 3.538   | 3.443        |
-| Hip-Hop   | 0.6953  | −10.6  | 0.0000    | 3.486   | 3.382        |
-| EDM       | 0.6616  | −8.7   | 0.0000    | 3.666   | 3.562        |
-| Neurofunk | 0.6296  | −8.3   | 0.0000    | 3.784   | 3.676        |
-| Metal     | 0.6242  | −7.5   | 0.0000    | 3.486   | 3.381        |
+| Genre     | IQS    | LUFS  | Drift (dB) | Drift Tier  | Peak (dBFS) | Pass |
+|-----------|--------|-------|------------|-------------|-------------|------|
+| ambient   | 0.4964 | -14.4 | 0.4260     | PASS_CF_LIM | -1.0        | ✅   |
+| edm       | 0.4727 |  -9.9 | 0.9160     | PASS_CF_LIM | -1.0        | ✅   |
+| hip-hop   | 0.5206 | -11.6 | 0.6310     | PASS_CF_LIM | -1.2        | ✅   |
+| jazz      | 0.5006 | -14.6 | 0.6370     | PASS_CF_LIM | -2.4        | ✅   |
+| classical | 0.5254 | -16.1 | 0.1350     | PASS_CF_LIM | -1.0        | ✅   |
+| neurofunk | 0.4622 |  -9.3 | 1.2660     | PASS_CF_LIM | -1.1        | ✅   |
+| lofi      | 0.5074 | -14.6 | 0.6310     | PASS_CF_LIM | -2.5        | ✅   |
+| metal     | 0.4626 |  -9.6 | 1.6090     | PASS_CF_LIM | -1.0        | ✅   |
+| pop       | 0.4839 | -13.1 | 1.0720     | PASS_CF_LIM | -1.8        | ✅   |
+| ambient99 | 0.5155 | -18.0 | 0.0000     | PASS        | -3.1        | ✅   |
 
 ### Aggregate Statistics
 
 ```
-IQS mean    = 0.699   (studio threshold ≥ 0.65)
-IQS std     = 0.058
-95% CI      = [0.682, 0.716]  (N=45, −34% narrower than N=10)
-Max drift   = 0.0000 dB  (contract: PASS ≤ 0.01 dB)
-Runtime μ   = 353 ms  (σ = 34 ms, GPU-independent)
-NOESIS UTMOS (mean)  = 3.630 ± 0.352
-NOESIS DNSMOS (mean) = 3.542 ± 0.324
+IQS:         mean=0.4947  std=0.0222  min=0.4622  max=0.5254
+L_emp:       1.0214 (uniform across all genres, Theorem B.16(i))
+κ:           0.9103  |  Stability margin: 0.090 (§EC2 GREEN)
+Drift tiers: PASS=1  PASS_CF_LIMITED=9  FAIL=0
+Pass rate:   10/10
+Snapshot:    v16  |  99/99 QA PASS
+```
+
+### Determinism Verification
+
+```
+§DIAG-LATENT: all diff_from_silence in [0.597, 0.813]  →  healthy DiT output ✓
+Operator graph checksum: f1d8a82c7d6e859667cddb7732b869ba3b82926501719e6da78b947edc3dd2ba
+Baseline freeze: 11/11 invariants intact (noesis_baseline.json)
 ```
 
 ---
 
-## IQS–Perceptual Correlation
+## IQS Note: CF-Limited Drift Penalty
 
-IQS v0.8 vs UTMOS surrogate (N=45, Phase-R Extended):
+The observed IQS mean (0.4947) is lower than the studio-quality gate
+(J ≥ 0.65 requires IQS ≥ 0.537 with QA_ext=0.82) because 9/10 tracks are
+**CF-limited**: the mastering pipeline cannot reach the aggressive LUFS targets
+for hot genres (EDM -9, neurofunk -8, metal -8 dBLUFS) due to crest-factor physics.
 
-| Metric | Value |
-|---|---|
-| Pearson r | **0.899** |
-| Spearman ρ | **0.890** |
-| Kendall τ | **0.727** |
-| p-value | << 0.001 (t=13.4, df=43) |
+High drift → high L_n term → IQS penalty. This is correct behavior: IQS
+accurately reflects that the mastering target was not fully achieved.
+The three-tier drift contract correctly classifies these as PASS_CF_LIMITED
+(not FAIL) since CF-limitation is physically justified.
 
-> **Note:** Evaluated on synthetic pipeline. Validation against real GPU-generated audio
-> with a blind listener study (N≥30 per genre) is listed as open work.
-
----
-
-## Baseline Comparison
-
-| Model | LUFS σ (dB) ↓ | Blind-SNR (dB) ↑ | UTMOS ↑ | Deterministic | Stable (κ<1) |
-|---|---|---|---|---|---|
-| DiffWave | 3.8 | 16.3 | 2.81 | ✗ | ✗ |
-| MusicGen | 4.2 | 18.1 | 3.24 | ✗ | ✗ |
-| Stable Audio 2 | 2.9 | 19.2 | 3.51 | ✗ | ✗ |
-| YuE | 3.1 | 19.8 | 3.42 | ✗ | ✗ |
-| Muse | 1.4 | 18.4 | 3.58 | partial | ✗ |
-| **NOESIS (ours)** | **0.0000** | **22.1** | **3.630** | **✓** | **✓ (κ=0.9103)** |
+**To improve IQS beyond 0.537:** tune Stage 8.5 pre-limiter to reduce CF
+before normalization, creating more headroom for hot genres.
 
 ---
 
-## Sensitivity Analysis
+## A/B Test Summary (Phase R.2–R.6)
 
-| Parameter | Sweep Range | J ≥ 0.65 Basin | Nominal |
-|---|---|---|---|
-| σ-slope | [0.70, 1.10] | [0.76, 1.08] | 0.95 |
-| Guidance scale | [1.0, 7.0] | [1.8, 6.4] | 4.0 |
-
-ΔJ_max = 0.056 — wide operational basin.
-
----
-
-## Determinism
-
-| Seeds | Genres | Runs/config | Total | SHA-256 matches |
-|---|---|---|---|---|
-| 11 | 9 | 3 | 297 | **99/99 ✓** |
-
-```
-CUBLAS_WORKSPACE_CONFIG=:4096:8
-torch.use_deterministic_algorithms(True)
-dtype: bfloat16  |  fix_nfe: 8
-model_type: noesis_dhcf_fno
-```
+| Test           | Verdict | ΔIQS   | Conclusion                              |
+|----------------|---------|--------|-----------------------------------------|
+| R2: PAL v1→v2  | B_WIN   | +0.020 | PAL v2 (FFT) adopted ✅                 |
+| R4: TinyMOS v1→v2 | A_WIN | −0.273 | TinyMOS v1 retained; v2 reverted ✅    |
+| R5: ISO226 0→0.5 | NEUTRAL | +0.006 | Pending online dedicated A/B run       |
+| R6: GlueBus    | NEUTRAL | +0.000 | Pending online dedicated A/B run       |
 
 ---
 
 ## Stability
 
 ```
-κ = 0.9103  (Appendix A)  |  Margin = 8.97%  |  Status: GREEN ✓
+L_emp = 1.0214  |  G_max = 4.0  |  κ = L_emp/G_max = 0.9103
+Stability margin = 1 − κ = 0.0897 ≈ 9.0%  (§EC2: GREEN)
+Risk envelope = ln(κ) + ln(L_emp) = −0.094 < 0  (Theorem E.1 satisfied)
+Theorem B.26: κ < 1  ✓
 ```
 
 ---
 
-## Ablation (IQS v0.8)
-
-| Config | Mean J | Δ |
-|---|---|---|
-| Full IQS v0.8 | 0.687 | — |
-| w/o Bark stereo ζ | 0.651 | −0.036 |
-| w/o Harmonic density η | 0.659 | −0.028 |
-| w/o MOS proxy α | 0.664 | −0.023 |
-| w/o Phase coherence γ | 0.672 | −0.015 |
-| w/o Loudness drift δ | 0.679 | −0.008 |
-| w/o Spectral distance β | 0.681 | −0.006 |
-
----
-
-## Snapshot v16
+## Snapshot v16 — Sample Record (ambient seed=42)
 
 ```json
 {
-  "seed": 42, "genre": "ambient",
-  "iqs": 0.7398, "lufs_measured": -14.31, "lufs_drift_db": 0.0000,
-  "utmos": 3.672, "dnsmos_ovrl": 3.581,
-  "runtime_ms": 309, "wav_sha256": "<sha256>",
-  "ops_checksum": "f1d8a82c...edc3dd2ba", "snapshot_version": 16
+  "snapshot_version": 16,
+  "seed": 42,
+  "IQS": 0.4964,
+  "integrated_lufs": -14.4,
+  "loudness_drift": 0.426,
+  "operator_graph_checksum": "f1d8a82c7d6e859667cddb7732b869ba3b82926501719e6da78b947edc3dd2ba",
+  "stability_margin": 0.090,
+  "empirical_Lipschitz": 1.0214,
+  "stability_status": "GREEN"
 }
 ```
 
 ---
 
+## Validation Suite
+
+```
+test_snapshot_v16.py:  99/99 PASSED  (53.8 ms)
+noesis_freeze_baseline --verify:  11/11 ALL INVARIANTS INTACT
+Phase R.1 pass rate:  10/10
+```
+
+---
+
+## Historical Reference: Synthetic Pipeline Baseline (pre-GPU)
+
+> The following data was measured on `phase_r_synthetic.py` (offline, no DiT).
+> It served as a pre-GPU calibration target and is retained for audit trail only.
+> **Do not use for production benchmarking — use Phase R.1 GPU results above.**
+
+| Genre     | IQS (synthetic) | LUFS  | Drift | UTMOS | DNSMOS |
+|-----------|-----------------|-------|-------|-------|--------|
+| Ambient   | 0.7398          | -14.3 | 0.000 | 3.672 | 3.581  |
+| Classical | 0.7631          | -16.1 | 0.000 | 3.729 | 3.638  |
+| Lo-Fi     | 0.7135          | -13.7 | 0.000 | 3.814 | 3.723  |
+| Jazz      | 0.7673          | -14.1 | 0.000 | 3.495 | 3.411  |
+| Pop       | 0.6984          | -11.8 | 0.000 | 3.538 | 3.443  |
+| Hip-Hop   | 0.6953          | -10.6 | 0.000 | 3.486 | 3.382  |
+| EDM       | 0.6616          |  -8.7 | 0.000 | 3.666 | 3.562  |
+| Neurofunk | 0.6296          |  -8.3 | 0.000 | 3.784 | 3.676  |
+| Metal     | 0.6242          |  -7.5 | 0.000 | 3.486 | 3.381  |
+
+*Synthetic mean IQS=0.699 reflects zero-drift ideal conditions (no CF-limitation).*
+*Real GPU IQS=0.4947 reflects CF-limited mastering — both are physically correct.*
+
+---
+
 *© 2026 AMAImedia · Ilia Bolotnikov · info@amaimedia.com*
+*Version: v1.1 (2026-03-07)*
+*Supersedes: BENCHMARK_RESULTS.md v1.0 (synthetic data only)*
