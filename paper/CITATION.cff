@@ -1,0 +1,36 @@
+# NOESIS DHCF-FNO — CITATION.cff
+# Full path: noesis-dhcf-fno/CITATION.cff
+# Author: Ilia Bolotnikov / AMAImedia
+cff-version: 1.2.0
+message: "If you use this framework or reference this work, please cite as below."
+type: software
+title: "NOESIS: Deterministic Hybrid Control Framework over Frozen Neural Operator with Objective-locked Optimization (DHCF-FNO)"
+authors:
+  - family-names: Bolotnikov
+    given-names: Ilia
+    affiliation: AMAImedia
+    email: info@amaimedia.com
+    website: https://amaimedia.com
+version: "0.9"
+date-released: "2026-03-07"
+url: "https://github.com/AMAImedia/noesis-dhcf-fno"
+repository-code: "https://github.com/AMAImedia/noesis-dhcf-fno"
+license: "Proprietary"
+keywords:
+  - deterministic audio generation
+  - frozen neural operator
+  - diffusion model control
+  - audio mastering
+  - reproducible machine learning
+  - DHCF-FNO
+  - IQS quality score
+preferred-citation:
+  type: unpublished
+  title: "NOESIS: Deterministic Hybrid Control Framework over Frozen Neural Operator with Objective-locked Optimization (DHCF-FNO)"
+  authors:
+    - family-names: Bolotnikov
+      given-names: Ilia
+      affiliation: AMAImedia
+  year: 2026
+  notes: "Submitted to IEEE Transactions on Audio, Speech, and Language Processing"
+  url: "https://github.com/AMAImedia/noesis-dhcf-fno"
