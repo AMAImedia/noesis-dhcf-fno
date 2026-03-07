@@ -1,0 +1,7 @@
+# NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
+
+Benchmark: Phase R.1
+Dataset: 33 genres
+Runs: 10
+Seed: locked
+Result: deterministic PASS
