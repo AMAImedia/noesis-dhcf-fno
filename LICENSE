@@ -1,0 +1,206 @@
+NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
+Copyright (c) 2026 AMAImedia.com
+All rights reserved.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+License: NOESIS Research License v1.0 (Research-only)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## License
+
+NOESIS is released under the **NOESIS Research License v1.0**.
+
+The source code is provided for research and academic inspection only.
+
+> License: NOESIS Research License v1.0 (Research-only)
+> If you use ideas from this work in academic publications,
+> please cite the NOESIS paper.
+> ![License](https://img.shields.io/badge/license-NOESIS%20Research-blue)
+
+Commercial use, redistribution, or derivative implementations of the system require written permission from AMAImedia.com.
+
+See LICENSE file for details.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+
+1. DEFINITIONS
+
+"License" shall mean the terms and conditions for use, reproduction, and
+distribution as defined by this document.
+
+"Licensor" shall mean AMAImedia.com, the copyright owner granting this License.
+
+"Author" shall mean Ilia Bolotnikov / AMAImedia.com (2026), the original
+creator of the NOESIS DHCF-FNO system, including all associated algorithms,
+DSP pipelines, diffusion control frameworks, and architectural innovations.
+
+"You" (or "Your") shall mean an individual or Legal Entity exercising
+permissions granted by this License.
+
+"Work" shall mean the NOESIS DHCF-FNO software system, including but not
+limited to: source code, configuration files, DSP modules, mastering pipeline,
+IQS quality scoring system, diffusion control framework, documentation,
+formulas, mathematical specifications, and all associated files made available
+under this License.
+
+"Derivative Works" shall mean any work that is based on, derived from,
+incorporates, or extends the Work or any substantial portion thereof.
+
+"Research Use" shall mean use strictly limited to academic research,
+educational study, personal learning, and non-commercial scientific
+experimentation.
+
+"Commercial Use" shall mean any use of the Work or Derivative Works in
+exchange for monetary compensation, or to provide a commercial service,
+product, or platform, or to support a revenue-generating activity of any kind.
+
+
+2. GRANT OF RESEARCH LICENSE
+
+Subject to the terms of this License, the Licensor hereby grants You a
+limited, non-exclusive, non-transferable, non-sublicensable license to:
+
+  (a) view and study the source code for Research Use only;
+  (b) modify the source code for Research Use only;
+  (c) reproduce the source code for personal Research Use only.
+
+This license explicitly does NOT grant any rights beyond those listed above.
+
+
+3. RESTRICTIONS
+
+You may NOT, without prior explicit written permission from the Licensor:
+
+  (a) use the Work or any Derivative Works for Commercial Use of any kind;
+  (b) distribute, publish, or make the Work publicly available in any form
+      (source, binary, compiled, or otherwise);
+  (c) sublicense the Work or Derivative Works to any third party;
+  (d) use the Work or Derivative Works as part of a product or service
+      offered to end users;
+  (e) use the Work or Derivative Works in any AI/ML training pipeline,
+      dataset creation, or model distillation process for commercial purposes;
+  (f) remove, alter, or obscure this copyright notice, the authorship
+      attribution, or any intellectual property notices contained in the Work;
+  (g) claim authorship or independent creation of any algorithm, method,
+      formula, or architecture originating from this Work.
+
+
+4. ATTRIBUTION AND AUTHORSHIP
+
+All copies, substantial portions, or Derivative Works used for Research Use
+must retain:
+
+  (a) this copyright notice in full;
+  (b) the NOESIS DHCF-FNO authorship attribution to
+      Ilia Bolotnikov / AMAImedia.com (2026);
+  (c) a prominent notice stating that the Work was modified, if applicable,
+      with the date and nature of modifications.
+
+Any academic publication, paper, report, or presentation that uses, references,
+or builds upon this Work must cite the original NOESIS DHCF-FNO system:
+
+  Ilia Bolotnikov / AMAImedia.com (2026).
+  NOESIS: Deterministic Hybrid Control Framework for Frozen Neural Operators
+  with Objective-locked Optimization (DHCF-FNO). AMAImedia.com.
+
+
+5. INTELLECTUAL PROPERTY
+
+The NOESIS DHCF-FNO system, including its:
+  - Deterministic Hybrid Control Framework (DHCF) architecture
+  - Frozen Neural Operator (FNO) diffusion control methodology
+  - CCCS (Cryptographic Control Chain System) subsystem
+  - IQS (Integrated Quality Score) v0.9 formula and weighting system
+  - 11-stage mastering pipeline design and operator ordering
+  - Three-tier LUFS drift contract (PASS / PASS_CF_LIMITED / FAIL)
+  - Cryptographic reproducibility system (Snapshot v16+)
+  - Genre-aware quality scoring: 33 canonical genres / 144 aliases
+  - Stage 8.5 v2 two-pass adaptive pre-limiter algorithm
+  - Generation Artifact Guard methodology
+  - KAD-integrated quality scoring pipeline
+  - Phase-aligned mono bass processing (Theorem C.3)
+  - Near-tight FIR crossover design (Theorem C.1)
+  - IRC-5 perceptual distortion minimization (Theorem C.2)
+  - Chained JSONL tamper-evident audit trail
+  - Mastering Merkle Tree (stage-level cryptographic commitment)
+  - All mathematical formulas, theorems, and engineering contracts
+
+...are the exclusive intellectual property of Ilia Bolotnikov / AMAImedia.com.
+
+This License does not transfer any ownership, patent rights, or intellectual
+property rights to You.
+
+
+6. GENERATOR AGNOSTICISM
+
+The NOESIS DHCF-FNO framework is designed to be compatible with multiple
+AI music generation backends. While the reference implementation uses
+ACE-Step v1.5 Turbo as the primary frozen neural operator, the mastering
+pipeline, IQS quality scoring, LUFS control, and reproducibility system
+are designed to work with any deterministic audio generation backend that
+exposes a compatible inference API. This includes, without limitation:
+MusicGen, Stable Audio, AudioLDM, Muse, and other audio generation models.
+Compatibility with alternative backends does not affect the intellectual
+property coverage of this License.
+
+
+7. COMMERCIAL LICENSING
+
+To obtain a commercial license for use of the Work in a product, service,
+platform, or any revenue-generating context, contact:
+
+  AMAImedia.com
+  Contact: available via official AMAImedia channels
+
+Commercial licenses are granted at the sole discretion of the Licensor.
+
+
+8. TRADEMARKS
+
+This License does not grant permission to use the trade names, trademarks,
+service marks, or product names "NOESIS", "DHCF-FNO", "AMAImedia", or
+"CCCS" in any context without prior written permission from the Licensor.
+
+
+9. DISCLAIMER OF WARRANTY
+
+THE WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL
+THE AUTHOR OR LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM, OUT OF, OR IN CONNECTION WITH THE WORK OR THE USE OR OTHER
+DEALINGS IN THE WORK.
+
+
+10. LIMITATION OF LIABILITY
+
+In no event and under no legal theory shall the Licensor or Author be liable
+to You for any direct, indirect, incidental, special, exemplary, or
+consequential damages arising from Your use of the Work, even if advised of
+the possibility of such damages.
+
+
+11. TERMINATION
+
+This License and the rights granted hereunder will terminate automatically
+upon any breach by You of the terms of this License. Upon termination, You
+must destroy all copies of the Work in Your possession.
+
+
+12. GOVERNING LAW
+
+This License shall be governed by and construed in accordance with applicable
+international copyright law and the laws of the jurisdiction of the Licensor.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+END OF TERMS AND CONDITIONS
+
+Copyright (c) 2026 AMAImedia.com
+Author: Ilia Bolotnikov / AMAImedia.com (2026)
+Project: NOESIS — Deterministic Hybrid Control Framework for Frozen Neural
+         Operators with Objective-locked Optimization (DHCF-FNO)
+
+For permissions beyond the scope of this license, write to AMAImedia.com.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
