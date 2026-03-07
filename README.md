@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/25818795/README.md)
 # NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
 
 <!-- NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
@@ -10,6 +11,52 @@ Full path: noesis-dhcf-fno/README.md -->
 📄 **Paper:** [PDF](https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/noesis_dhcf_fno_arxiv.pdf)
 
 ---
+
+# 🏆 Phase R.1 milestone reached
+
+All benchmark tracks now pass deterministic mastering constraints.
+
+Drift reduced 206×.
+IQS improved +42%.
+
+# Phase R.1 — Historical Result
+
+## Benchmark Summary
+
+| Phase | PASS | PASS_CF_LIMITED | IQS Mean | Max LUFS Drift |
+|------|------|----------------|---------|---------------|
+| R.0 | 0 | 10 | 0.4947 | 1.609 dB |
+| R.1 | 10 | 0 | 0.7027 | 0.0078 dB |
+
+## Improvements
+
+Drift reduction:
+1.609 dB → 0.0078 dB  
+Reduction factor: **206×**
+
+IQS improvement:
+0.4947 → 0.7027  
+Increase: **+42%**
+
+All tracks moved from PASS_CF_LIMITED → PASS.
+
+## Key Case
+
+metal genre:
+
+before:
+drift = 1.609 dB
+
+after:
+drift = 0.0055 dB
+
+This confirms the expected behavior of **Stage 8.5 v4** limiter architecture.
+
+## Conclusion
+
+Stage 8.5 v4 successfully stabilizes LUFS drift and improves perceptual quality across all tested genres.
+
+The system now satisfies deterministic mastering constraints required by the NOESIS protocol.
 
 ## Research Status
 
