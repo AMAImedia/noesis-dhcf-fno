@@ -1,5 +1,12 @@
+## NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
+## Copyright (c) 2026 AMAImedia.com
+## All rights reserved.
+
+---
 
 The framework operates **without modifying neural network weights**.
+
+📄 **Paper:** [PDF](https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/NOESIS_DHCF_FNO_paper_arxiv.pdf)
 
 ---
 
