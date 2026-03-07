@@ -7,7 +7,7 @@ Full path: noesis-dhcf-fno/README.md -->
 
 > **The framework operates without modifying neural network weights.**
 
-📄 **Paper:** [PDF](https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/NOESIS_DHCF_FNO_paper_arxiv.pdf)
+📄 **Paper:** [PDF]([https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/NOESIS_DHCF_FNO_paper_arxiv.pdf](https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/noesis_dhcf_fno_arxiv.pdf))
 
 ---
 
