@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/25818795/README.md)
+[README.md](https://github.com/user-attachments/files/26134313/README.md)
 # NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
 
 <!-- NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
@@ -12,12 +12,12 @@ Full path: noesis-dhcf-fno/README.md -->
 
 ---
 
-# 🏆 Phase R.1 milestone reached
+# 🏆 R.REF2 Benchmark (2026-03-14, MasteringChain v3.4)
 
-All benchmark tracks now pass deterministic mastering constraints.
+All 9/10 genres: PASS or CF\_Limited drift contract (≤6.0 dB).
+$\overline{\mathrm{IQS}}=0.614$, $\overline{J}=0.388$, MasteringChain v3.4 (31 stages).
 
-Drift reduced 206×.
-IQS improved +42%.
+**R.REF4 GPU target:** $\overline{J}>0.40$, 10/10 genres, ~2026-03-21.
 
 # Phase R.1 — Historical Result
 
@@ -173,3 +173,27 @@ See **Appendix F** of the paper for the complete step-by-step protocol.
 ---
 
 *© 2026 AMAImedia · Ilia Bolotnikov · info@amaimedia.com*
+
+## Architecture State (2026-03-21)
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| MasteringChain | v3.4, 31 stages | Ozone 12 parity 11/11 |
+| IQS | v0.8, sealed | checksums 9097e760 / 12c2f47c |
+| NOESIS-MOS | v1, r=0.837 | FMA-small pseudo-labels |
+| Genre profiles | 38 canonical | +phonk/hyperpop/darkwave/shoegaze/... |
+| SC text rules | 84 keyword rules | EDM/vocal/emotional/platform |
+| Taxonomy | 1049+55 entries | TF-IDF + Qwen3.5-0.8B fallback |
+| SVC | v1.0, step 6000 | Seed-VC, f0_condition=True |
+| DisCoder | MUSHRA 88.14 | ICASSP 2025, post-chain re-vocoder |
+| Caption LoRA | training | Qwen3.5-0.8B, 579 pairs, ~2h CPU |
+
+## Benchmark History
+
+| Date | IQS_mean | J_mean | Chain | Notes |
+|------|----------|--------|-------|-------|
+| 2026-03-12 | 0.524 | 0.315 | v1.8 (22 stages) | R.REF3, post-CFG-fix |
+| 2026-03-14 | 0.614 | 0.388 | v3.4 (31 stages) | R.REF2, FAD(PANN) wired |
+| ~2026-03-21 | >0.62 | >0.40 | v3.4 | R.REF4 GPU target |
+
+
