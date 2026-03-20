@@ -1,264 +1,556 @@
+[NOESIS_PROTOCOL_v2_1.md](https://github.com/user-attachments/files/26134320/NOESIS_PROTOCOL_v2_1.md)
 """NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
 Copyright (c) 2026 AMAImedia.com
 All rights reserved.
-docs/NOESIS_DHCF_FNO_PROTOCOL_v0_7.md
-
-Layer:          DOCUMENTATION
-Phase:          DHCF-FNO Formal Theory v0.7 — COMPLETE CANONICAL BASE DOCUMENT
-Module:         NOESIS System Protocol (MASTER)
-Author:         Ilia Bolotnikov / AMAImedia.com (2026)
-Status:         SEALED — content immutable; v0.8 extensions in ADDENDUM
-
-DOCUMENT HIERARCHY:
-    PRIMARY:  NOESIS_DHCF_FNO_PROTOCOL_v0_7.md   ← THIS FILE (full theory)
-    ADDENDUM: NOESIS_DHCF_FNO_PROTOCOL_v0_8_ADDENDUM.md (new: C.1–C.3, F.1–F.2, G, M.10)
-
-    To use the complete current protocol, read BOTH files.
-    This file contains the full mathematical foundation (Parts 0–M, all theorems).
-    The addendum contains only new theorems and corrections introduced in v0.8.
-
-IQS VERSION NOTE (v0.7 vs v0.9 canonical):
-    This document originally defined IQS as 5-term (alpha=0.30, eta=0.20).
-    CANONICAL since iqs.py v0.9: 6-term (alpha=0.50, eta=0.25, Sum=1.00).
-    Where this document writes "IQS formula", apply the v0.9 formula from
-    NOESIS_DHCF_FNO_PROTOCOL_v0_8_ADDENDUM.md §Formula-Base as authoritative.
-
-Responsibility:
-    • Complete source of truth for NOESIS formal theory (Parts 0–M)
-    • DHCF-FNO class definition, axioms A1–A7, and instantiation proof
-    • IEEE TAC / TASLP Supplementary Material compatible
-    • Full theorem library: B.1–B.31, H.1–H.4, E.1–E.7 (complete)
-    • Propositions A.1–A.4 + Theorem A.5 + Proposition P1 (NOESIS ∈ DHCF-FNO)
-    • Hybrid automaton + Filippov + ISS + Lyapunov formal stack (Part D)
-    • Full stochastic theory: Robbins-Monro, CLT, Polyak-Ruppert, LDP (Part E)
-    • Engineering Contract v1: production-grade stability assertions (Part F)
-    • Extended Hierarchical Optimization Layer (Part K)
-    • Formal Interface Contracts + Mode Architecture (Part L)
-    • Documentation Consolidation + Conflict Resolution (Part M)
-    • Phase S Migration Complete + Code Hygiene Verified (NEW in v0.7)
-    • Operator taxonomy v1.4 (M_core_pure / M_fixed / M_half / M_full)
-    • J_extended hierarchical objective (v0.5, Part K)
-    • ObjectiveControl meta-operator formalized (§21, Theorem B.25)
-Guarantees:
-    • NOESIS ∈ DHCF-FNO formally verified (Proposition P1)
-    • All v3.2 engineering invariants preserved without exception
-    • Snapshot contract v14 (structure_plan_checksum in core block)
-    • Snapshot contract v16 extension (v0.5, backward-compatible)
-    • Theorems B.1–B.31 + H.1–H.4 + E.1–E.7 complete and non-redundant
-    • Propositions A.1–A.4 + Theorem A.5 (v0.5)
-    • All empirical constants from QA regression suite v1.4 (2026-03-01) — SEALED
-    • BFGS/CoordinateSearch hierarchical model clarified (NEW in v0.7)
-"""
+B:/Downloads/Portable/NOESIS_DHCF-FNO/docs/NOESIS_PROTOCOL_v2_1.md"""
 
 ═══════════════════════════════════════════════════════════════════════
-NOESIS PROTOCOL v0.7  [CANONICAL BASE — read with ADDENDUM v0.8]
+NOESIS PROTOCOL v2.0  [SINGLE CANONICAL DOCUMENT — COMPLETE]
 A Deterministic Hybrid Control Framework for Frozen Neural Operators
-DHCF-FNO: Formal Theory, Hybrid Stability, Stochastic Guarantees,
-          Cryptographic Closure, Engineering Contract v1,
-          Extended Hierarchical Optimization Layer,
-          Documentation Consolidation & Conflict Resolution
+DHCF-FNO: Formal Theory · Hybrid Stability · Stochastic Guarantees
+          Cryptographic Closure · Engineering Contract
+          Extended Hierarchical Optimization Layer
+          Music World Model (N7) · AI Band (N8) · Cloud (N12)
+          NOESIS-MOS v2 · AGMS · Edit Suite E1-E7 · SVC Seed-VC
 ═══════════════════════════════════════════════════════════════════════
 
-System:   NOESIS: A Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
-Author:   Ilia Bolotnikov / AMAImedia.com (2026)
-Mode:     DHCF-FNO Class Formalization + Full Hybrid + Stochastic Theory Stack
-Policy:   Zero Algorithmic Degradation | Formally Verified Architecture
-Level:    IEEE TAC / TASLP / arXiv cs.SD + eess.AS + eess.SY
-Status:   SEALED | Extended by NOESIS_DHCF_FNO_PROTOCOL_v0_8_ADDENDUM.md
+Version:    2.0  (2026-03-14)
+Author:     Ilia Bolotnikov / AMAImedia.com (2026)
+Status:     ACTIVE — SINGLE SOURCE OF TRUTH for all agents and sessions
+Supersedes: NOESIS_DHCF_FNO_PROTOCOL_v1_0.md (sealed 2026-03-13)
+            NOESIS_WORLD_MODEL_SPEC_v1_0.md    (merged → §WIII)
+            NOESIS_AI_BAND_PROTOCOL_v1_0.md    (merged → §WIV)
+            NOESIS_CLOUD_ARCHITECTURE_v1_0.md  (merged → §WV)
+            All prior protocol files (historical reference only)
+
+DOCUMENT HIERARCHY (this file is authoritative):
+    THIS FILE          ← operational + formal theory (single source of truth)
+    NOESIS_ROADMAP_v0_21.md ← phase roadmap, milestones (NOESIS_TZ retired)
+    README_PROTOCOL.md ← navigation stub pointing here
+
+Tests at seal:              ~520 passing (2026-03-14)
+Operator checksum:          7c0d5abae743c9a2a46f4f88519f1d79ad6d9fc319cc8ee389ddbdaf1d202050
+IQS checksum:               9097e7605b8895f1   (authoritative: iqs_weights.py)
+IQS production checksum:    12c2f47cba1ac6be   (authoritative: iqs.py — NOT stale)
+AutoEval schema cksum:      3073949bcdf6e22e   (v1.3.0, 29 params — NOT 3073949bcdf6e22e (v1.3.0, 29 params) v1.1.0)
+R.REF3 benchmark:           IQS_mean=0.5243, J_mean=0.3146, 10/10 PASS/PASS_CF_LIMITED
+N4–N11:                     ALL DONE 65/65 PASS (2026-03-13)
+Edit Suite E1–E7:           ALL DONE 68 PASS (2026-03-14)
+MasteringChain:             v3.0 / 31 stages + §MC-ACOUSTIC (2026-03-14)
 
 ╔══════════════════════════════════════════════════════════════════════╗
-║  ADDENDUM NOTICE (2026-03-07)                                        ║
-║  This document is the COMPLETE BASE (Parts 0–M, all theorems).       ║
-║  New theorems added in v0.8 are in the ADDENDUM file:                ║
-║    • Part C: Theorems C.1 (Near-Tight FIR), C.2 (IRC-5), C.3 (Phase)║
-║    • Part F: Theorems F.1 (KAD/MMD), F.2 (MAD/MAUVE)                ║
-║    • Part G: Generator Agnosticism (Definition G.1)                  ║
-║    • §M.10:  /sleep Memory Consolidation Algorithm                   ║
-║    • Invariants #16/19–23 updated/new                                ║
-║    • IQS formula: canonical is v0.9 (6-term) in ADDENDUM §Formula    ║
-║  Corrections to this document's formulas:                            ║
-║    • IQS v0.7 had 5-term (alpha=0.30). Canonical = 6-term v0.9       ║
-║    • Invariant #4: MonoBass = Stage 0 (not MidSideHP)                ║
-║    • Invariant #6: TruePeak < -0.1 dBTP (not 0 dBTP)                ║
-║    • Invariant #16: KAD(PANN) primary (not VGGish)                   ║
-║  Language note:                                                       ║
-║    Body §M.4 (line ~461) contains Russian (sealed pre-English rule).  ║
-║    All new content and headers: English only.                         ║
+║  CORRECTION NOTICE (2026-03-13) — v1.0 supersedes all prior files   ║
+║                                                                      ║
+║  KEY CORRECTIONS applied in v1.0 vs prior sealed versions:          ║
+║  • guidance_scale = 7.0 CONFIRMED (not 0.0; not 3.0 — see §0.1)    ║
+║  • N4–N11 ALL DONE 65/65 PASS (2026-03-13): MWM/Band/Vocal/Planners║
+║  • AutoEval schema: 3073949bcdf6e22e v1.3.0 (not 3073949bcdf6e22e (v1.3.0, 29 params) v1.1.0)   ║
+║  • E6 = SVC Seed-VC (NOT TTS/CosyVoice2 — different task)           ║
+║  • B_linf = 3.60972762 (confirmed TEST 1; CONTRACT v1.2 had error)   ║
+║  • IQS v0.9 canonical: alpha=0.50, eta=0.25 (6-term, Sum=1.00)     ║
+║  • IQS_max = 0.75 (not 0.50 as in v0.7 formula)                    ║
+║  • PASS_CF_LIMITED <= 6.0 dB (not 2.0 dB)                          ║
+║  • Mastering chain = v3.0 / 31 stages (reorder + §MC-ACOUSTIC)     ║
+║  • TruePeak < -0.1 dBTP (not 0 dBTP)                               ║
+║  • Drift contract v1.3 supersedes v1.1                              ║
+║  • NOESIS-MOS v1 replaces TinyMOS as MOS backend (N1.1)            ║
+║  • AGMS (N2.x) operational                                          ║
+║  • All benchmarks before 2026-03-10 are INVALID (CFG broken)       ║
 ╚══════════════════════════════════════════════════════════════════════╝
 
+Changelog v1.0 (from v0.7 base + v0.8/v0.9 addenda):
 
-Changelog v0.8 (ADDENDUM only — base document sealed):
+  BASE: v0.7-CANONICAL (sealed 2026-03-04)
+        ALL formal theory content of v0.7 preserved below (Parts 0–M).
+        All theorems B.1–B.31, H.1–H.4, E.1–E.7, A.1–A.5 unchanged.
+        All empirical constants locked (2026-03-01) unchanged.
+        IQS weight VALUES unchanged (only canonical version bumped).
 
-  ADDENDUM: NOESIS_DHCF_FNO_PROTOCOL_v0_8_ADDENDUM.md (2026-03-07)
-  This base document (v0.7) is NOT modified by v0.8 changes.
-  All v0.8 additions are in the separate ADDENDUM file.
+  Additions from v0.8 ADDENDUM (integrated):
+    + Theorem C.1 (Near-Tight FIR crossover, N_tap=8192)
+    + Theorem C.2 (IRC-5 perceptual limiter, N=8 bound)
+    + Theorem C.3 (Phase-aligned mono bass, energy conservation)
+    + Theorem F.1 (KAD distribution-free consistency)
+    + Theorem F.2 (MAD human alignment)
+    + §F.3 metric taxonomy table
+    + Definition G.1 (FNO as abstract interface, Generator Agnosticism)
+    + §M.10: /sleep Memory Consolidation Algorithm
+    + Invariants #19–#23 added
+    + IQS v0.9 canonical formula (6-term, integrated into §B.2)
+    + Canonical Formula Base integrated into §B.2
 
-  Summary of v0.8 additions (see ADDENDUM for full text):
-    + Part C: Theorem C.1 (Near-Tight FIR crossover, N_tap=8192)
-              Theorem C.2 (IRC-5 perceptual limiter, N=8 bound)
-              Theorem C.3 (Phase-aligned mono bass, energy conservation)
-    + Part F: Theorem F.1 (KAD distribution-free consistency, ICML 2025)
-              Theorem F.2 (MAD human alignment, SRC_MAD ≥ SRC_FAD+0.15)
-              §F.3 metric taxonomy table
-    + Part G: Definition G.1 (FNO as abstract interface)
-              Generator Agnosticism: multi-backend registry
-    + §M.10:  /sleep Memory Consolidation (CPM, Algorithm M.10.2)
-    + Invariants #16/#6 corrected; #19–#23 added
-    + IQS v0.9 canonical formula (6-term, alpha=0.50, eta=0.25, Sum=1.00)
-    + Canonical Formula Base (IQS, J, EBU R128, KAD, Mastering chain)
-    + Scientific references: KAD, MAD, Muse 2026, Survey 2025, mylm
+  Additions from v0.9 operational (integrated):
+    + Drift contract v1.3: PASS_CF_LIMITED <= 6.0 dB (was 2.0 — WRONG)
+    + Invariant #8: guidance_scale FROZEN (§C.5)
+    + Invariant #24: per-genre J gate (not hardcoded 0.65)
+    + Genre studio thresholds (37 entries)
+    + De-esser v2 spec
+    + Stage 8.4 CF-Reduction tiers
+    + Dither criteria Stage S10
 
-Changelog v0.7 (from v0.5):
+  NEW in v1.0:
+    + §0.1: CFG 3-Phase History (critical: guidance_scale=7.0 CONFIRMED)
+    + §0.2: Dual IQS checksum clarification
+    + Part N: N-Phase work (NOESIS-MOS v1, AGMS, Phase-R Benchmark)
+    + §N.1: NOESIS-MOS v1 (sha256=d781d747, r=0.837, MAE=0.203)
+    + §N.2: AGMS (Adaptive Genre Mastering System, N2.1–N2.5 DONE)
+    + §N.3: R.REF3 Benchmark Results (10/10, IQS_mean=0.5243)
+    + Invariants #16–#17: overrides_dir gate + SpectralTransfer
+    + Hardware spec updated: RTX 3060 Laptop 6GB confirmed
 
-  BASE: v0.5-CANONICAL (sealed 2026-03-02)
-        ALL content of v0.5 preserved below without exception.
-        v0.5 Parts K–L preserved. v0.4 theorems B.1–B.31, H.1–H.4, E.1–E.7 — unchanged.
-        v0.5 Propositions A.1–A.4, Theorem A.5 — unchanged.
-        All empirical constants — unchanged.
 
-  + PART M: Documentation Consolidation & v0.7 Resolutions (NEW in v0.7)
-    - §M.1 Scope: 35+ legacy documents consolidated into 8+1 unified v0.7 files
-    - §M.2 IQS Formula Conflict Resolution:
-           Three conflicting formulas (Protocol B.2 4-term, Roadmap ext MOS, HD-doc 5-term)
-           → Unified IQS v0.7 (5-term): α·MOS − β·D − γ·P − δ·L + η·H
-           Single source: metrics/iqs.py, weights checksum-locked
-    - §M.3 Optimizer Hierarchy Clarification:
-           BFGS = inner optimizer (local IQS maximization, trust-region r=0.5)
-           CoordinateSearch = outer optimizer (global J_extended over Ω_grid ≤ 450)
-           BFGS does NOT see QA_external (separation per §K.6 + §EC11)
-    - §M.4 Phase S Migration: COMPLETE
-           139+ files migrated, zero "acestep" / "acestep_runtime" references remaining
-           All canonical headers updated to NOESIS DHCF-FNO format
-           Import DAG: 7 layers + cross-cutting, verified via grep
-    - §M.5 Superseded Documents Registry:
-           All v0.3/v0.4/v0.5/v0.6 addenda merged into unified v0.7 files
-           See NOESIS_DOCUMENT_INDEX_v0_7.md for complete supersession table
-    - §M.6 Stem Separation Standard (IMMUTABLE):
-           12 frequency bands, canonical order, n_fft=4096, cosine crossover
-           See NOESIS_STEM_AND_VOCAL_SPEC_v0_7.md
-    - §M.7 Vocal Control Pipeline:
-           Forced vocal conditioning through Caption text (§7.1 mutable)
-           Extended IQS with VocalGenderError term
-           See NOESIS_STEM_AND_VOCAL_SPEC_v0_7.md + NOESIS_TZ_v0_7.md Part B
-    - §M.8 Cross-references to v0.7 document set:
-           DOCUMENT_INDEX, CONTRACT, MASTERING_SPEC,
-           MODULE_AND_MIGRATION, ROADMAP_AND_FORMULAS, STEM_AND_VOCAL_SPEC,
-           CROSS_AUDIT, TZ (unified)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART 0-PRE — CRITICAL OPERATIONAL NOTICES  (v1.0)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  Preserved from v0.5 (unchanged, no exceptions):
-  = All v0.5 content (Parts 0, I, II, D, III, IV, D.7, E, F, G, H(QA), K, L)
-  = All theorems B.1–B.31, H.1–H.4, E.1–E.7, A.1–A.5
-  = All empirical constants locked (2026-03-01)
-  = Canonical seal v0.5 preserved as historical record
+────────────────────────────────────────────────────────────────────
+§0.1 — CFG 3-Phase History (CRITICAL — guidance_scale=7.0 CONFIRMED)
+────────────────────────────────────────────────────────────────────
 
-Changelog v0.5 (from v0.4):
+  The guidance_scale parameter has been mishandled across three phases.
+  Understanding this history is mandatory before touching the generation pipeline.
 
-  BASE: v0.4-CANONICAL (sealed 2026-03-01, SHA-256: 30359f12ea102b2c...)
-        ALL content of v0.4 preserved below without exception.
-        v0.4 theorems B.1–B.31, H.1–H.4, E.1–E.7 — unchanged.
-        v0.4 empirical constants — unchanged.
-        v0.4 operator taxonomy v1.4 — unchanged.
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ PHASE 1 (pre-2026-03-10): guidance_scale=7.0 SET, CFG BROKEN   │
+  │                                                                 │
+  │   guidance_scale=7.0 was set in all configs.                   │
+  │   HOWEVER: The dual-pass CFG was not implemented in sdk.py.    │
+  │   The shift parameter was conflated with guidance_scale.       │
+  │   Result: near-silence (LUFS < -55). All data INVALID.         │
+  │   All benchmarks before 2026-03-10 are INVALID — do not cite. │
+  └─────────────────────────────────────────────────────────────────┘
 
-  + PART I: Extended Hierarchical Optimization Layer (NEW in v0.5)
-    - §K.1 Scope: meta-optimization over protocol-legal inner kernel
-    - §K.2 Extended Objective J_extended = ω_int·IQS + ω_ext·QA_external
-    - §K.3 External Quality Aggregation (UTMOS, DNSMOS, FAD, variance penalty)
-    - §K.4 Hierarchical Optimization Structure (inner BFGS + outer CoordinateSearch)
-    - §K.5 Theorem Applicability Map (v0.4 → v0.5 coverage)
-    - §K.6 Prohibitions (what the extended layer MUST NOT do)
-    - §K.7 Snapshot v16 Integration
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ PHASE 2 (2026-03-11): guidance_scale=0.0 — WRONG DIAGNOSIS     │
+  │                                                                 │
+  │   Misdiagnosed as "ACE-Step v1.5 Turbo is distilled model,    │
+  │   no CFG needed, guidance_scale=0.0".                         │
+  │   Protocol v0.9 was written with guidance_scale=0.0.          │
+  │   This was incorrect. Protocol v0.9 §1 is RETIRED on this     │
+  │   point. Do not use guidance_scale=0.0.                       │
+  └─────────────────────────────────────────────────────────────────┘
 
-  + PART J: Extended Operator & Interface Contracts (NEW in v0.5)
-    - §L.1 IQS Extension: +η·HarmonicDensity (5-term formula)
-    - §L.2 External MOS Sensor Contract (frozen, deterministic, bounded)
-    - §L.3 Snapshot v16 Schema (backward-compatible extension of v14)
-    - §L.4 Mode Architecture (Studio / Fast)
-    - §L.5 Operator Extensions (HarmonicDensityOperator, LatentEntropyShaper, etc.)
-    - §L.6 Formal Interface Contracts (Diffusion→Mastering→QA→Optimization→Diffusion)
+  ┌─────────────────────────────────────────────────────────────────┐
+  │ PHASE 3 (2026-03-12): guidance_scale=7.0 CONFIRMED FIX ✓       │
+  │                                                                 │
+  │   Root cause identified: shift and guidance_scale were         │
+  │   conflated in sdk.py. Fix:                                    │
+  │     1. De-conflate shift (=3.0) from guidance_scale (=7.0)    │
+  │     2. Implement proper dual-pass CFG:                         │
+  │        vt = vt_uncond + 7.0*(vt_cond - vt_uncond)             │
+  │     3. Revert model_type to "acestep" (not "turbo-cfgless")   │
+  │   Result: 10/10 MUSIC, LUFS -24.8 to -16.1, flatness 0.033–  │
+  │   0.214. R.REF3 benchmark confirmed. PASS.                    │
+  └─────────────────────────────────────────────────────────────────┘
 
-  + New formal results (v0.5):
-    - Proposition A.1: Lipschitz continuity of J_extended
-    - Proposition A.2: Existence of maximizer (Weierstrass)
-    - Proposition A.3: Determinism (zero-variance advantage preserved)
-    - Proposition A.4: Finite termination of CoordinateSearch
-    - Theorem A.5: Hierarchical Deterministic Convergence
+  SEALED CONSTANTS POST-FIX:
+    guidance_scale = 7.0    ← IMMUTABLE (§EC8, Invariant #8)
+    shift          = 3.0    ← separate parameter, do not conflate
+    fix_nfe        = 8
+    model_type     = "acestep"
 
-  Preserved from v0.4 (unchanged, no exceptions):
-  = All theorems B.1–B.31 exact, numbering and content unchanged
-  = H.1–H.4 hybrid theory block unchanged
-  = E.1–E.7 stochastic theory block unchanged
-  = Part F Engineering Contract v1 (§EC1–§EC11) unchanged
-  = Part G Master Theorem + UGAS + Bilinear System unchanged
-  = Snapshot contract v14 (structure_plan_checksum in core block) unchanged
-  = All empirical constants locked (2026-03-01) unchanged
-  = Operator taxonomy v1.4 unchanged
-  = Canonical stage order unchanged
+  Any document or code that sets guidance_scale=0.0 or guidance_scale=3.0
+  is WRONG and must be corrected immediately.
 
-Changelog v0.4 (from v0.3):
+────────────────────────────────────────────────────────────────────
+§0.2 — Dual IQS Checksum Clarification
+────────────────────────────────────────────────────────────────────
 
-  + Theorem B.26: Contraction + Common Quadratic Lyapunov + GES under switching
-    (TAC-level, ready for journal submission without modification)
-  + Theorem B.27: UES under Dwell-Time Switching
-    (allows expanding intermediate regimes with net contraction)
-  + Theorem B.28: Joint Spectral Radius Bound for Switched Mastering Family
-    (rho_JSR <= g_max * ||T||; exact condition for UES under arbitrary switching)
-  + Theorem B.29: Composite Lyapunov for Closed-Loop (x, theta) System
-    (V(x,theta) = |x|^2 + lambda*(J(theta)-J*); exponential stability of full loop)
-  + Part E: Stochastic Theory Block (NEW)
-    - E.1: Large Deviation Bound (Furstenberg-Kesten + Cramér; almost-sure decay)
-    - E.2: Concentration Inequality for SGD (Azuma-Hoeffding; martingale bound)
-    - E.3: Almost-Sure Convergence theta → theta* (Robbins-Monro; Robbins-Siegmund)
-    - E.4: Central Limit Theorem for theta_k (asymptotic normality)
-    - E.5: Polyak-Ruppert Averaging (optimal asymptotic covariance H^{-1} Sigma H^{-1})
-    - E.6: Non-Asymptotic High-Probability Bound (finite-sample; Bernstein)
-    - E.7: Large Deviation Principle (Freidlin-Wentzell SDE; rate functional I(phi))
-  + Part F: Engineering Contract v1 (NEW)
-    - §EC1-§EC10: Production stability assertions, abort conditions, snapshot contract
-    - 5 engineering rules: stability guard, gain cap, LR schedule, Polyak avg, telemetry
-  + Operator taxonomy v1.4 (measured 2026-03-01):
-    - M_core_pure  = L_phi(x)              process_core_fixed()   B.16(i) L<=4.0
-    - M_fixed      = L_phi o N(x)          [separate API]         B.16(ii) L<=14.44
-    - M_half       = L_phi o N_adapt(x)    process_with_config()  B.16-B  L=L_N*L_core
-    - M_full       = L_{phi(x)} o N(x)     process()              B.16-A  piecewise
-  + StreamingMasteringEngine v4.2: process_core_fixed() API
-  + test_lipschitz_mastering.py v1.4: 11/11 passed, 0 failed, 3 skipped
-  + Updated Section Map: Part E, Part F, Appendix covers B.1-B.29+H.1-H.4+E.1-E.7
+  Two valid IQS checksums coexist in the codebase — both are CORRECT:
 
-  Preserved from v0.3 (unchanged):
-  = All theorems B.1–B.25 exact, numbering and content unchanged
-  = H.1–H.4 hybrid theory block unchanged
-  = Snapshot contract v14 (structure_plan_checksum in core block)
-  = Stage order, import DAG, dtype contracts
-  = All engineering invariants A1–A7
+  CHECKSUM A: 9097e7605b8895f1
+    Source:   iqs_weights.py (AutoEval proxy table)
+    Format:   dict with keys mos_proxy/bark_stereo_zeta/lufs_compliance/
+              dynamic_range/spectral_balance/harmonic_density
+    Values:   0.25/0.15/0.20/0.15/0.15/0.10
+    Used by:  autoeval_param_schema.py, AutoEval subsystem
 
-Empirical constants locked (2026-03-01, test_lipschitz_mastering.py v1.4, 11/11 passed):
-  B_f              = 1.40730381   power frame upper bound (MEASURED 2026-02-28)
-  A_f              = 0.51969725   power frame lower bound (MEASURED 2026-02-28)
-  B_linf           = 3.60972762   L∞ Young's bound (MEASURED 2026-02-28)
-  C_M_empirical    = 0.8912       limiter ceiling (Theorem B.14 ≤ 1.0 ✓)
-  G_max_design     = 4.0          limiter gain bound (M_core_pure, Theorem B.16(i))
-  G_max_adaptive   ≈ 78.6         full adaptive chain (amp=0.1, LUFS renorm)
-  L_core_empirical = 1.0214       M_core_pure (50 trials, process_core_fixed)
-  L_N_empirical    = 17.89        pre_graph Lipschitz (= L_half/L_core_theory)
-  L_half_empirical = 258.25       M_half (30 trials, process_with_config)
-  L_emp (M_fixed)  ≤ 14.44        theoretical bound Theorem B.16(ii)
-  L_emp (M_full)   ≈ 258.25       measured M_full (Theorem B.16-A)
-  Composition law: L_N * L_core_theory = 17.89 * 14.44 = 258.25 ✓ (Theorem B.16-B)
-  Margin B.16(i):  G_max/L_core_emp = 4.0/1.02 = 3.92x (23.0 dB safety margin)
+  CHECKSUM B: 12c2f47cba1ac6be
+    Source:   iqs.py (production IQSWeights dataclass)
+    Format:   IQSWeights(alpha=0.50, eta=0.25, beta=0.08, gamma=0.07,
+              delta=0.06, zeta=0.04, version="0.8")
+    Used by:  IndustrialQualityEngine, ClosedLoopEngine, all production runs
 
-Changelog v0.3 (preserved for reference):
-  PROJECT RENAMED: ACE-Step 1.5.1 Turbo → NOESIS (DHCF-FNO)
-  All file headers updated. System is now formally positioned as
-  DHCF-FNO instantiation, not audio pipeline.
+  RULE: 12c2f47cba1ac6be is NOT stale. Do not replace it with 9097e7.
+  Any document claiming 12c2f47c is wrong is itself wrong.
+  Verify: pytest test_constants.py test_autoeval_param_schema.py
 
-  + DHCF-FNO class formally defined: Axioms A1–A7, Definitions 1–2 (§0-C, §21)
-  + Proposition P1: NOESIS ∈ DHCF-FNO (formally proven, §0-C)
-  + Theorems H.1–H.4: Hybrid Lyapunov, Finite Switching, ISS, Crypto Closure
-  + Theorems B.19–B.25: piecewise C¹, jump bound, regime stability, B.24 tradeoff, B.25 ObjCtrl
-  + §21: ObjectiveControl Layer — three-level Signal/Parameter/Objective split
-  + Part D: Hybrid Theory Block (H.1–H.4)
-  + Compliance matrix: 12 new entries
+────────────────────────────────────────────────────────────────────
+§0.3 — Hardware Specification (Confirmed — never substitute)
+────────────────────────────────────────────────────────────────────
 
+  Machine:  Mechrevo Kuangshi Series GM7AG0M
+  OS:       Windows 11
+  CPU:      Intel Core i7-12700H (14 cores, 20 threads, 4.7 GHz boost)
+  GPU:      NVIDIA RTX 3060 Laptop GPU — 6 GB GDDR6 VRAM  ← TIGHT
+  RAM:      64 GB DDR5
+
+  VRAM allocation (DO NOT CHANGE):
+    DiT 2.4B  (bfloat16) → cuda:0   ~4.80 GB  (offload after inference)
+    LM  662M              → cpu      ~1.30 GB
+    VAE                   → cpu idle; cuda:0 decode peak ~0.3 GB
+    Qwen3-Emb 0.6B        → cpu      ~0.60 GB  (float32)
+    Total: ~6.1 GB → offload_dit_to_cpu=True REQUIRED
+
+  Runtime: ~7.6 s/track (30 s clip, fix_nfe=8, RTX 3060)
+  Python:  B:\Downloads\Portable\NOESIS_DHCF-FNO\python_embedded\python.exe
+           ALWAYS embedded Python — never system Python
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§1. GENERATION INVARIANTS (IMMUTABLE — §EC8)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+These are SEALED. Agents must not propose, experiment with, or change them.
+
+  fix_nfe             = 8        # SHIFT_TIMESTEPS defined for 8 only
+  guidance_scale      = 7.0      # CFG dual-pass confirmed fix (see §0.1)
+  shift               = 3.0      # SEPARATE param — do NOT conflate with guidance_scale
+  infer_method        = "ode"    # Euler ODE
+  model_type          = "acestep"
+  dtype               = bfloat16 # float16 → NaN overflow in diffusion
+  offload_dit_to_cpu  = True     # REQUIRED: DiT + LM + VAE > 6 GB
+  offload_to_cpu      = True     # VAE + LM always on CPU
+  use_flash_attention = False    # RTX 3060 compatibility
+
+  Dual-pass CFG implementation (mandatory):
+    vt_uncond = model(xt, t, uncond_embed)
+    vt_cond   = model(xt, t, cond_embed)
+    vt        = vt_uncond + 7.0 * (vt_cond - vt_uncond)
+
+  3x RNG lock — MANDATORY before every generate call:
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)   # or: torch.Generator(device).manual_seed(seed)
+
+  Result parsing — result["audios"][0] is a DICT:
+    audio_np = result["audios"][0]["tensor"].cpu().numpy().astype(np.float32)
+    sr       = result["audios"][0]["sample_rate"]   # 48000
+
+  WAV output — always float32, never int16:
+    import soundfile as sf
+    sf.write(path, audio_np.T, sr, subtype="FLOAT")
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§2. SEALED SYSTEM CONSTANTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  # Generation (all IMMUTABLE — §EC8)
+  fix_nfe              = 8
+  guidance_scale       = 7.0
+  shift                = 3.0
+  infer_method         = "ode"
+  DIT_DTYPE            = bfloat16
+  offload_dit_to_cpu   = True
+  silence_floor_lufs   = -69.0
+  ARTIFACT_FLOOR_LUFS  = -55.0
+  PRE_LIFT_TARGET_LUFS = -35.0
+  gain_cap_db          = +60.0
+
+  # Checksums (version-bumped before any change)
+  OPERATOR_GRAPH_CHECKSUM  = "7c0d5abae743c9a2a46f4f88519f1d79ad6d9fc319cc8ee389ddbdaf1d202050"
+  IQS_WEIGHTS_CHECKSUM_AE  = "9097e7605b8895f1"    # iqs_weights.py (AutoEval)
+  IQS_WEIGHTS_CHECKSUM_PROD= "12c2f47cba1ac6be"    # iqs.py (production)
+  AUTOEVAL_SCHEMA_VERSION  = "1.1.0"
+  AUTOEVAL_SCHEMA_CKSUM    = "3073949bcdf6e22e"
+  NOESIS_MOS_SHA256        = "d781d747"             # artifacts/noesis_mos/noesis_mos_v1.pt
+  J_STUDIO_THRESHOLD_AGENT = 0.62                  # agent default; per-genre overrides apply
+
+  # Frame bounds (sealed 2026-03-01)
+  A_f    = 0.51969725
+  B_f    = 1.40730381
+  B_linf = 3.60972762
+  kappa  = 0.910
+
+  # R.REF3 Benchmark (sealed 2026-03-12, guidance_scale=7.0)
+  REREF3_IQS_MEAN  = 0.5243
+  REREF3_J_MEAN    = 0.3146
+  REREF3_PASS      = 10    # 10/10 PASS or PASS_CF_LIMITED
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§3. IQS v0.9 CANONICAL (SEALED 2026-03-11, corrected in v1.0)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  # Production weights (iqs.py — checksum 12c2f47cba1ac6be)
+  IQS = alpha*MOS_n + eta*HD_n - beta*Dist_n - gamma*Phase_n
+        - delta*Drift_n - zeta*Bark_n
+
+  alpha = 0.50   # MOS normalized (NOESIS-MOS v1 backend)
+  eta   = 0.25   # Harmonic density (genre-normalized)
+  beta  = 0.08   # Distance penalty
+  gamma = 0.07   # Phase penalty
+  delta = 0.06   # Drift penalty
+  zeta  = 0.04   # Bark stereo coherence penalty
+  # Sum(abs) = 1.00 | IQS_max = 0.75 | IQS_min = -0.25
+
+  J = 0.60 * IQS + 0.40 * QA_external
+
+  VERSION_HISTORY:
+    v0.7: alpha=0.35, eta=0.15 — IQS_max=0.50; J>=0.65 physically unreachable
+    v0.8: alpha=0.50, eta=0.25 — IQS_max=0.75; studio gate achievable
+    v0.9: weights = v0.8 (recalibration alpha=0.47/eta=0.28 REVERTED; Spearman rho -0.194)
+    NOTE: iqs.py stores version="0.8" but weights match v0.9 spec — this is correct.
+
+  NOESIS-MOS v1 backend (N1.1, DONE):
+    Path:    artifacts/noesis_mos/noesis_mos_v1.pt
+    SHA256:  d781d747...
+    Pearson: r = 0.837
+    MAE_mi:  0.203
+    Params:  823K trainable (MuQ frozen)
+    Import:  from qa_external.noesis_mos_inference import get_mos_backend
+    Replaces TinyMOS in all production MOS computations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§4. DRIFT CONTRACT v1.3 (§C.4 — corrected 2026-03-11)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  PASS              drift <= 0.01 dB
+  PASS_CF_LIMITED   drift > 0.01 dB  AND  CF-physically-limited  AND  <= 6.0 dB
+  FAIL              drift > 6.0 dB   OR   unexplained drift
+
+  CF-limited by model property (NOT mastering failures):
+    metal ~1.2 dB, neurofunk ~1.6 dB, edm ~0.7 dB → PASS_CF_LIMITED
+
+  IMPORTANT: v0.8 ADDENDUM had PASS_CF_LIMITED <= 2.0 dB — THIS WAS WRONG.
+             Corrected to 6.0 dB by Drift Contract v1.3 (2026-03-11).
+  Code ref:  _DRIFT_CF_LIMIT_DB = 6.0  in phase_r_direct.py
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§5. MASTERING PIPELINE — MasteringChain v2.0 (18 Stages, IMMUTABLE ORDER)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Stage 0    Generation Artifact Guard    ARTIFACT_FLOOR=-55 LUFS; gain_cap=+60 dB
+  Stage 0.5  AudioSR                      optional, default off
+  Stage 1    DC Removal
+  Stage 2    Spectral Tilt EQ             genre-aware AdaptiveSpectralTiltStage
+  Stage 3    Multiband Crossover+Comp     FIR N=8192, Kaiser beta=8.6, full-FFT ONLY
+  Stage 3.5  Stem-Aware Bus + EQ          12 genre overrides, 8-band parametric, L_EQ<=2.0
+  Stage 4    MonoBass Alignment           FFT-phase, f<120 Hz
+  Stage 5    LUFS Slope
+  Stage 5.5  Spectral Transfer            DeepAFx-ST DSP, 31-band ISO266
+  Stage 6    Glue Bus Compression
+  Stage 7    Bark Masking                 24-band lateral-inhibition
+  Stage 7.5  Multiband Stereo Width       3-band M/S, bass always mono
+  Stage 7.7  De-esser v2                  sibilance 4.5-8.5 kHz; threshold -18 dBFS,
+                                          sqrt-ratio, 20ms frame; de_esser_enabled per genre
+  Stage 8    LUFS Normalization           closed-loop <=8 passes, BS.1770-4
+  Stage 8.4  CF-Reduction Pre-Limiter     fires when cf_reduction_enabled=true
+  Stage 8.5  Pre-Limiter v2               two-pass; sparse_benefit +4 dB; 5ms lookahead; O(N) deque
+  Stage 9    True-Peak Limiter            4x polyphase Kaiser FIR: L=4, N=128, beta=12.0
+  Stage 9.5  Post-Limit LUFS Trim
+  Stage 10   Dither (TPDF)               per-genre dither_enabled (see §8)
+  Stage 11   Safety Hard-Clamp            AFTER LUFS measurement — always last
+
+  Stage 8.4 CF-Reduction tiers:
+    AGGRESSIVE (metal, neurofunk, hardstyle, dubstep):  ratio 8:1, attack 0.5 ms
+    HOT        (edm, trap, drill, phonk, dnb, house, techno): ratio 6:1, attack 1 ms
+    STANDARD   (hip-hop, pop, rock, soul, rnb, funk):   ratio 4:1, attack 2 ms
+    SPARSE     (ambient, jazz, classical, lofi, etc.):  cf_reduction_enabled=false
+
+  NOTE: The v0.7 §11 spec describes 7+limiter stages — this is the INNER DSP decomposition
+  (M = L ∘ N₆ ∘ N₅ ∘ N₄ ∘ N₃ ∘ N₂ ∘ N₁) used in formal theorems. The production
+  implementation has 18 numbered stages. Both descriptions are correct at different levels.
+
+  OVERRIDES_DIR GATE (Invariant #16, added v1.0):
+    All N2.5 AGMS lookups gated behind:
+      if self._overrides_dir and genre:
+    This prevents FileNotFoundError when overrides_dir is None (default offline mode).
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§6. GENRE LUFS TARGETS (sealed v1.5)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  GENRE_LUFS_TARGETS = {
+      "ambient":      -16.0,  "edm":         -9.0,   "hip-hop":     -9.0,
+      "jazz":         -12.0,  "classical":   -16.0,  "neurofunk":   -8.0,
+      "lofi":         -13.0,  "metal":        -8.0,  "pop":        -11.0,
+      "rock":          -8.0,  "trap":         -9.0,  "drill":       -9.0,
+      "phonk":         -9.0,  "dubstep":      -9.0,  "hardstyle":   -9.0,
+      "house":         -9.0,  "techno":       -9.0,  "dnb":         -9.0,
+      "garage":       -11.0,  "soul":         -9.0,  "rnb":         -9.0,
+      "funk":          -9.0,  "gospel":      -11.0,  "country":    -12.0,
+      "folk":         -12.0,  "latin":       -11.0,  "bossa_nova": -12.0,
+      "reggae":       -11.0,  "afrobeats":   -11.0,  "world":      -16.0,
+      "orchestral":   -16.0,  "cinematic":   -16.0,  "experimental":-14.0,
+  }  # Default: -14.0
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§7. GENRE STUDIO THRESHOLDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Module: metrics/genre_studio_threshold.py (37 entries + default)
+
+  NEVER hardcode 0.65 — always call:
+    from metrics.genre_studio_threshold import get_studio_threshold, classify_j_score
+    threshold = get_studio_threshold(genre)   # float
+    tier = classify_j_score(j, genre)         # "STUDIO" / "NEAR_MISS" / "BELOW"
+
+  Key per-genre thresholds:
+    CF-aggressive:  metal=0.58, neurofunk=0.60, hardstyle=0.60
+    CF-hot:         edm=0.62,   trap=0.62,      drill=0.62
+    Standard:       hip-hop=0.64, pop=0.65
+    Sparse:         jazz=0.65,  classical=0.65, ambient=0.65
+
+  Physical rationale: metal at -8 LUFS →
+    alpha*MOS_n + eta*HD_n <= 0.50*0.75 + 0.25*0.65 = 0.5375 (max)
+    → J >= 0.65 is mathematically unreachable for CF-aggressive genres.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§8. DITHER CRITERIA — Stage S10
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  dither_enabled=true when ALL:
+    1. Genre in {jazz, classical, ambient, cinematic, orchestral, world,
+                 folk, country, bossa_nova, lofi, soul, gospel}
+    2. target_lufs <= -12.0
+    3. drift_tier == PASS (no CF-limiting)
+    4. export_depth in {16, 24} bit
+
+  dither_enabled=false when ANY:
+    hot/digital genre (-8 to -11 LUFS) | streaming delivery | CF-limited output
+  Default in mastering_config.yaml: false (pass-through).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§9. INVARIANTS (operational)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  #1   DiT/VAE/Qwen3/LM weights FROZEN forever (Theorem B.1)
+  #2   Sigma scheduler monotonic + checksum-locked (§13)
+  #3   Deterministic 3× RNG lock (§8)
+  #4   MonoBass = Stage 4 (FFT-phase, f<120 Hz)
+  #5   Drift contract v1.3: PASS_CF_LIMITED <= 6.0 dB (NOT 2.0 dB)
+  #6   TruePeak < -0.1 dBTP (NOT 0 dBTP)
+  #7   IQS weights Sum = 1.00; checksums 9097e7... (AE) and 12c2f47c... (prod)
+  #8   guidance_scale = 7.0 FROZEN — dual-pass CFG confirmed fix (§0.1)
+  #9   1 seed → 1 wav → 1 snapshot_checksum (crypto closure H.4)
+  #10  float32 audio; float64 filter design; IIR poles < 1.0 at __init__
+  #11  No rand()/np.random without seed-lock; no torch.dropout
+  #12  BFGS receives IQS_base ONLY — QA_external NEVER to inner optimizer (§K.6)
+  #13  Canonical stem order: kick→snare→hihats→perc→subbass→bass→
+       lead→synth→pad→vocals→fx→other (12 bands, IMMUTABLE)
+  #14  n_fft=4096 for stem separation; sr=48000
+  #15  No hidden learning: model.eval(), requires_grad=False on all frozen
+  #16  overrides_dir gate: all N2.5 AGMS lookups behind
+       `if self._overrides_dir and genre:` (prevents None-path crash)
+  #17  SpectralTransfer disabled in diagnose_mastering selftest:
+       enable_spectral_transfer=False (prevents offline model error)
+  #19  TruePeak: N=256, beta=8.0
+  #20  Crossover: N=8192, stopband >= 80 dB
+  #21  JSONL chain: entry[n].prev = SHA-256(entry[n-1])
+  #22  VST: plugin.reset() before every process() call
+  #24  Per-genre J gate: get_studio_threshold(genre) — NOT hardcoded 0.65
+  #25  CF-Reduction fires ONLY at Stage 8.4 when cf_reduction_enabled=true
+  #INV-N-5  1 seed → 1 wav → 1 checksum (determinism end-to-end)
+
+  Full invariant library: FORMAL THEORY (Parts II, D, E, F below)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§10. AUTOEVAL SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Files (DO NOT DELETE any):
+    autoeval_agent.py           — autonomous overnight optimization loop
+    autoeval_param_schema.py    — SCHEMA_VERSION 1.1.0, 21 mutable params
+    NOESIS_AUTOEVAL_PROGRAM.md  — agent instructions injected into LLM context
+
+  Modifies ONLY (Control Plane — code agents must NOT write these):
+    mastering_config.yaml
+    genre_profiles_overrides.yaml
+    pre_limiter_overrides.yaml
+
+  NEVER touches: generation pipeline, model weights, NOESIS source code
+
+  Corrected benchmark command:
+    CORRECT:  python_embedded\python.exe phase_r_direct.py
+    WRONG:    tools\run_phase_r.py  (broken SDK layer — pre-existing bug)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§11. DSP RULES (NON-NEGOTIABLE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Pure numpy in mastering stages — no scipy IIR
+  2. IIR poles: assert np.all(np.abs(poles) < 1.0) at __init__ — NOT at runtime
+  3. FIR: full-length FFT ONLY — block 1024 << kernel 8192 = signal collapse
+  4. dtype: float32 audio, float64 filter design — explicit always
+  5. Deterministic FFT: same input → bitwise identical output
+  6. TruePeak: always via mastering/true_peak_filter.py — never roll own
+  7. Stage 11 clamp: AFTER LUFS measurement; drift contract uses pre-clamp value
+  8. HighPassStage: alpha = 1.0 / (omega + 1.0) — NOT omega / (omega + 1.0)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§12. CODE STANDARDS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Module size: <=150 LOC target, 200 hard cap; orchestrator+helpers split if exceeded.
+
+  Every new file must start with:
+    """NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
+    Copyright (c) 2026 AMAImedia.com
+    All rights reserved.
+    B:/Downloads/Portable/NOESIS_DHCF-FNO/<FULL_PATH>
+    """
+
+  Rules:
+  - English only: code, comments, docstrings, logs — zero exceptions
+  - Type hints on all new/modified functions
+  - Docstrings: purpose + key inputs/outputs + raised exceptions
+  - No bare except; no print debug in committed code
+  - Functions: one responsibility; "and" in description → split
+  - SHA-256 on every new dataflow output
+  - 3x RNG lock before every generate call
+
+  ZERO-LEGACY POLICY:
+    FORBIDDEN in adapter\, cli\, mastering\, metrics\, genre\, tools\:
+      "acestep" as import path, class name, string literal
+      "ACEStep" as class name, string literal
+    Allowed ONLY in adapter\ files with comment: # HF-COMPAT: direct upstream import
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§13. COMMON MISTAKES (corrected)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Wrong                                 Correct
+  ─────────────────────────────────     ──────────────────────────────
+  guidance_scale = 0.0                  guidance_scale = 7.0
+  guidance_scale = 3.0                  guidance_scale = 7.0 (shift=3.0 is separate)
+  offload_dit_to_cpu = False            offload_dit_to_cpu = True
+  scipy.io.wavfile.write (int16)        soundfile.write (float32, FLOAT)
+  result["audios"][0] as array          result["audios"][0]["tensor"]...
+  alpha = omega / (omega + 1)           alpha = 1.0 / (omega + 1.0)
+  block-by-block FIR (kernel>>block)    full-length FFT convolution
+  torch.float16                         torch.bfloat16
+  fix_nfe = 32                          fix_nfe = 8
+  J >= 0.65 hardcoded                   J >= get_studio_threshold(genre)
+  PASS_CF_LIMITED <= 2.0 dB             PASS_CF_LIMITED <= 6.0 dB
+  tools\run_phase_r.py                  phase_r_direct.py
+  checksum f1d8a82c...                  7c0d5aba... (current operator graph)
+  IQS checksum 9097e7... everywhere     9097e7... (AE) AND 12c2f47c... (prod) — BOTH VALID
+  system Python                         python_embedded\python.exe
+  modifying acestep\                    READ-ONLY original
+  writing Control Plane YAMLs           only autoeval_agent.py writes them
+  NOESIS-MOS sha256=d781d747 stale      sha256=d781d747 is CURRENT v1 (N1.1 DONE)
+  overrides_dir lookup without gate     if self._overrides_dir and genre: (Invariant #16)
+  infer_method = "euler"                infer_method = "ode"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§14. BENCHMARK GATE (required before every commit)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  python_embedded\python.exe -m pytest tests\ -v --tb=short
+  python_embedded\python.exe phase_r_direct.py
+  # Required: 10/10 MUSIC (flatness < 0.3)
+  # After mastering connected: 10/10 PASS/PASS_CF_LIMITED, FAIL=0
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+═══════════════════════════════════════════════════════════════════════
+FORMAL THEORY BASE — Preserved from v0.7-CANONICAL (sealed 2026-03-04)
+All Theorems B.1–B.31, H.1–H.4, E.1–E.7, A.1–A.5 unchanged.
+Empirical constants sealed 2026-03-01 unchanged.
+Corrections to this section are noted in Part 0-PRE above.
+═══════════════════════════════════════════════════════════════════════
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 PART 0 — THEORETICAL POSITIONING
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -4199,3 +4491,1820 @@ CANONICAL SEAL v0.7
 
   Recompute: sha256sum NOESIS_DHCF_FNO_PROTOCOL_v0_7.md
 
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART C — FIR THEOREMS  (from v0.8 ADDENDUM)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────
+Theorem C.1 — Near-Tight FIR Crossover (N_tap=8192)
+────────────────────────────────────────────────────────────────────
+
+  For N_tap = 8192 (vs N_tap=2048 in v0.7):
+  The Kaiser-windowed FIR crossover achieves near-power-complementary
+  behavior with B_f/A_f → 1 + ε(N_tap), ε decreasing as O(1/N_tap).
+
+  At N_tap = 8192, Kaiser β=8.6:
+    Theoretical prediction: B_f/A_f ≈ 1.02–1.05 (vs 2.708 at N_tap=2048)
+    Stopband attenuation: ≥ 80 dB (Invariant #20)
+    This justifies the crossover upgrade in MasteringChain v2.0 Stage 3.
+
+  Proof: By Parseval frame theory (Theorem B.15). Finer frequency
+  resolution at N_tap=8192 reduces transition band artifacts at
+  crossover frequencies (120 Hz, 5 kHz). ∎
+
+────────────────────────────────────────────────────────────────────
+Theorem C.2 — IRC-5 Perceptual Limiter (N=8 bound)
+────────────────────────────────────────────────────────────────────
+
+  The IRC-5 (Infinite Clipper with Release, 5th order) limiter family
+  satisfies the ISP-safe property for N ≤ 8 stages:
+
+  Theorem: For N ISP-safe limiter stages in series, each with
+  ceiling c_i ∈ [0,1]:
+    ‖x_out‖∞ ≤ min_i(c_i) ≤ 1
+  and the composition is still 1-Lipschitz (Corollary B.2 generalized).
+
+  NOESIS implementation: 4× ISP-safe stages, N=4 ≤ 8 ✓.
+
+────────────────────────────────────────────────────────────────────
+Theorem C.3 — Phase-Aligned Mono Bass (energy conservation)
+────────────────────────────────────────────────────────────────────
+
+  MonoBass Alignment (Stage 4) via FFT-phase correction conserves energy:
+
+  Let x_L, x_R be left/right channels. Let x_sub = (x_L + x_R)/2.
+  The phase correction operator P_φ satisfies:
+    ‖P_φ(x_sub)‖₂ = ‖x_sub‖₂  (energy-preserving)
+    Arg(P_φ(X_sub)(k)) = Arg(X_sub_ref(k)) for k s.t. f_k < 120 Hz
+
+  Proof: Phase rotation in frequency domain is unitary. Energy of
+  cos(θ) = energy of cos(θ + φ) for any φ. ∎
+
+────────────────────────────────────────────────────────────────────
+§C.4 — Drift Contract v1.3 Formal Statement
+────────────────────────────────────────────────────────────────────
+
+  See §4 operational definition above.
+  Formal grounding: the 6.0 dB CF_LIMITED threshold corresponds to the
+  empirical maximum LUFS overshoot observed for metal/neurofunk genres
+  at fix_nfe=8, guidance_scale=7.0 (Phase 3 confirmed).
+  Physical cause: hard-limiter clipping residual from crest factor
+  ≥ 20 dB in synthetic percussion transients at -8 LUFS target.
+
+────────────────────────────────────────────────────────────────────
+§C.5 — guidance_scale Invariant (Invariant #8)
+────────────────────────────────────────────────────────────────────
+
+  guidance_scale = 7.0 is a SEALED constant (§EC8).
+  This was confirmed by Phase 3 CFG fix (see §0.1).
+  Any future modification requires:
+    1. Explicit version bump in version.py
+    2. operator_graph_checksum recomputation
+    3. Full R.REF3 re-run
+    4. CANONICAL_BASELINE.json update
+    5. All agents notified
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART F-EXT — METRIC TAXONOMY (from v0.8 ADDENDUM §F.1–§F.3)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────
+Theorem F.1 — KAD Distribution-Free Consistency
+────────────────────────────────────────────────────────────────────
+
+  KAD (Kernel Audio Distance) with PANN embeddings is distribution-
+  free consistent for audio quality assessment:
+
+  Theorem F.1 (from ICML 2025 reference [43]):
+  For PANN-based embedding ψ: 𝒴 → ℝᵈ:
+    KAD(P, Q) = MMD(ψ_*P, ψ_*Q) is consistent for P ≠ Q
+    where MMD is the maximum mean discrepancy with RBF kernel.
+
+  Implication for NOESIS: FAD(PANN) is the primary FAD backend.
+  VGGish is secondary (historical reference only).
+
+────────────────────────────────────────────────────────────────────
+Theorem F.2 — MAD Human Alignment
+────────────────────────────────────────────────────────────────────
+
+  MAD (Music Audio Distance) achieves higher human alignment than FAD:
+    SRC_MAD ≥ SRC_FAD + 0.15  (Spearman rank correlation with human MOS)
+
+  Implication: NOESIS-MOS v1 (based on MuQ embeddings) is architecturally
+  aligned with MAD principles, supporting r=0.837 Pearson correlation.
+
+────────────────────────────────────────────────────────────────────
+§F.3 — Metric Taxonomy Table
+────────────────────────────────────────────────────────────────────
+
+  Metric      Type            Backend     Human Align  NOESIS Role
+  ──────────  ──────────────  ──────────  ───────────  ────────────────
+  IQS         Internal        NOESIS-MOS  High (r=0.84) Primary objective
+  J_extended  Composite       IQS+QA_ext  High         Studio gate
+  NOESIS-MOS  Learned MOS     MuQ+head    High (train) IQS alpha term
+  FAD(PANN)   Distribution    PANN CNN    Medium       QA_external
+  FAD(VGGish) Distribution    VGGish      Low          Historical ref
+  LUFS        DSP             BS.1770-4   N/A          Invariant check
+  TruePeak    DSP             Kaiser FIR  N/A          Invariant check
+  KAD/MMD     Distribution    PANN        High         v2.0 planned
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART G-EXT — GENERATOR AGNOSTICISM (Definition G.1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Definition G.1 (Frozen Neural Operator as Abstract Interface):
+  The FNO F_Θ: 𝒫 × 𝕊 → 𝒳 is an abstract interface parameterized by:
+    — Prompt space 𝒫 (text, MIDI, reference audio, etc.)
+    — Seed space 𝕊 = ℕ (deterministic RNG)
+    — Output space 𝒳 (latent or waveform, depending on backend)
+
+  NOESIS DHCF-FNO is generator-agnostic: any F_Θ satisfying A1–A7
+  may be substituted. Current backend: ACE-Step v1.5 Turbo (DiT 2.4B).
+
+  Multi-backend registry (operator_registry.py):
+    BACKEND_REGISTRY = {
+        "acestep": AceStepBackend,       # active production
+        "musicgen": MusicGenBackend,     # registered, not deployed
+        "bark": BarkBackend,             # registered, not deployed
+    }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§M.10 — /sleep Memory Consolidation Algorithm (from v0.8 ADDENDUM)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Between sessions, the Claude agent executes /sleep to consolidate
+  working memory (userMemories) using the CPM (Canonical Protocol Memory)
+  algorithm:
+
+  Algorithm M.10.2 (CPM — Canonical Protocol Memory Consolidation):
+    Input:  session transcript T = {t_1, ..., t_k}
+    Output: updated memory M' (diff against M)
+
+    1. Extract protocol mutations: {seed_const, guidance_scale, IQS_weights,
+       operator_checksum, test_counts, benchmark_results}
+    2. Detect conflicts with sealed constants (§EC8)
+    3. Overwrite M[field] if and only if Phase 3 confirms new value
+    4. Append session summary (milestones, test count, blocking issues)
+    5. Prune stale entries (entries referencing superseded versions)
+    6. Compute M'_checksum = SHA256(json_sort(M'))
+
+  This algorithm ensures session memory is always consistent with
+  the canonical protocol (this document).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART N — v1.0 ADDITIONS: NOESIS-MOS, AGMS, BENCHMARK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+────────────────────────────────────────────────────────────────────
+§N.1 NOESIS-MOS v1 (N1.1 — DONE 2026-03-12)
+────────────────────────────────────────────────────────────────────
+
+  NOESIS-MOS is a learned MOS predictor replacing TinyMOS in production.
+  It provides the alpha*MOS_n term in the IQS formula.
+
+  Architecture:
+    Backbone:   MuQ (frozen) — music-domain contrastive encoder
+    Head:       3-layer MLP (823K trainable params, 2048→512→128→1)
+    Output:     MOS ∈ [1,5], normalized to [0,1] for IQS
+    Training:   FMA-small 8K pseudo-labels (Audiobox-AES PQ scores)
+    Loss:       MSE + rank correlation regularization
+
+  Model artifact:
+    Path:    artifacts/noesis_mos/noesis_mos_v1.pt
+    SHA256:  d781d747...  (first 8 chars; full hash in model metadata)
+
+  Performance:
+    Pearson r:    0.837  (vs Audiobox-AES reference)
+    MAE_mi:       0.203  (Mean Interval Absolute Error)
+    Training:     N1.1 session 2026-03-12, ~2h RTX 3060
+
+  Integration (N1.2 — DONE):
+    from qa_external.noesis_mos_inference import get_mos_backend
+    NoesisMOSBackend injects qwen3_encode_fn post-hoc:
+      backend = get_mos_backend()
+      backend.qwen3_encode_fn = qwen3_encode_fn  # injected at QA1 time
+    All imports: absolute package paths (qa_external.noesis_mos)
+
+  Status:
+    QA1 run (T2): MOS_n=0.6245, IQS=0.5041, J=0.5825; PASS 0/10
+    Root cause: Qwen3 encode_fn not yet injected at QA1 evaluation time.
+    Fix: inject before the QA1 call in closed_loop_engine.py.
+    Full re-run with injection → expected J > 0.65 for standard genres.
+
+────────────────────────────────────────────────────────────────────
+§N.2 AGMS — Adaptive Genre Mastering System (N2.1–N2.5 DONE)
+────────────────────────────────────────────────────────────────────
+
+  AGMS provides per-genre mastering parameter learning from the DJ collection.
+  The system adapts genre-specific overrides using historical mastering data.
+
+  DJ Collection:
+    File:    models/NOESIS_MOS/dj_collection_aes_classified.jsonl
+    Size:    8,091 tracks
+    Format:  {genre, lufs_int, true_peak, flatness, aes_score, ...}
+
+  N-Phase completion status:
+    N2.1 DONE: GenreDetector v2 (33 genres, 144 aliases)
+    N2.2 DONE: AGMS data pipeline (jsonl → per-genre statistics)
+    N2.3 DONE: AGMS lookup tables (genre_mastering_master_profiles.py)
+    N2.4 DONE: AGMS-aware MasteringChain integration
+    N2.5 DONE: Per-genre overrides_dir gate (Invariant #16)
+
+  AGMS constants:
+    AGMS_MIN_HISTORY = 10    # minimum tracks for reliable statistics
+    AGMS_EMA_ALPHA   = 0.15  # exponential moving average for updates
+
+  Design constraints:
+    AGMS is Control Plane only. It modifies:
+      mastering_config.yaml
+      genre_profiles_overrides.yaml
+      pre_limiter_overrides.yaml
+    AGMS NEVER modifies: generation pipeline, model weights, IQS formula.
+
+────────────────────────────────────────────────────────────────────
+§N.3 R.REF3 Benchmark Results (SEALED 2026-03-12)
+────────────────────────────────────────────────────────────────────
+
+  R.REF3 is the first valid benchmark run with guidance_scale=7.0 (Phase 3).
+  All prior benchmarks (R.REF1, R.REF2, Phase R.GPU) are INVALID.
+
+  Configuration:
+    guidance_scale = 7.0  ← CFG fix confirmed
+    fix_nfe        = 8
+    IQS version    = v0.9 (12c2f47cba1ac6be)
+    MOS backend    = NOESIS-MOS v1 (not yet injected at QA1)
+    date           = 2026-03-12
+
+  Results (10 tracks):
+    PASS rate:      10/10 (PASS or PASS_CF_LIMITED)
+    FAIL:           0
+    LUFS range:     -24.8 to -16.1 dB
+    Flatness range: 0.033 – 0.214
+    IQS_mean:       0.5243
+    J_mean:         0.3146   ← below 0.65 because NOESIS-MOS not yet injected
+    guidance:       7.0      ← confirmed music generation (not silence)
+
+  Note on J_mean = 0.3146:
+    J < 0.65 does NOT indicate poor audio quality.
+    The constraint J >= 0.65 was calibrated for NOESIS-MOS-injected runs.
+    Without Qwen3 injection, MOS_n underestimates → J underestimates.
+    Expected J after full injection: ≥ 0.65 for standard genres.
+
+  Disclosure per §12 (honest reporting):
+    Metal/neurofunk/hip-hop CF-limited 3–5 dB = model property, not mastering bug.
+    These genres are reported as PASS_CF_LIMITED per Drift Contract v1.3.
+
+────────────────────────────────────────────────────────────────────
+§N.4 ITO Style Transfer and SC Text Controller
+────────────────────────────────────────────────────────────────────
+
+  New operators added in Session 1 (2026-03-12):
+
+  ito_style_transfer.py:
+    ITO (Iterative Transfer Optimization) — reference-guided style transfer.
+    Applies perceptual distance minimization between generated audio and
+    a target reference file. Operates in parameter space Ω only.
+    Tests: ITO 10/10 PASS
+
+  sc_text_controller.py:
+    SC (Semantic Controller) — text-driven conditioning injection.
+    Extends Caption formula with structured semantic prefixes.
+    Interacts with Qwen3-Embedding for semantic distance computation.
+    Tests: SC 10/10 PASS
+
+  Both files comply with:
+    - NOESIS header + full path
+    - English only
+    - float32 audio dtype
+    - SHA-256 on dataflow outputs
+    - IIR pole assert at __init__ (where applicable)
+
+────────────────────────────────────────────────────────────────────
+§N.5 UI Stack (ace-step-ui)
+────────────────────────────────────────────────────────────────────
+
+  Stack: Next.js + TypeScript + Tailwind v4 (@tailwindcss/postcss, ESM)
+  Status: UI.1 DONE — localhost:3000 live (Parts 3–9), 0 TS errors
+
+  Previous stack (Vite 6 + React 19, port 5173) is SUPERSEDED.
+  Files NOESIS_UI_FROZEN_SPEC_v1_0.md and NOESIS_UI_BRIEF_FOR_NEW_CHAT.md
+  have SUPERSEDED banners pointing to current Next.js stack.
+
+  Features:
+    - 12-stem StemExportModal
+    - 33-genre GenerationPanel
+    - Real-time IQS display
+    - Phase-R benchmark trigger
+
+  Build command:
+    cd ace-step-ui && "C:/Program Files/nodejs/npm.cmd" run build
+
+────────────────────────────────────────────────────────────────────
+§N.6 Active Blockers and Pending Work (updated 2026-03-14)
+────────────────────────────────────────────────────────────────────
+
+  IMMEDIATE (blocking Phase R re-run):
+    [x] N1.2 DONE: Qwen3 encode_fn injected into NoesisMOSBackend (2026-03-12)
+    [ ] N3.finetune IN PROGRESS (CPU ~6-10h) → artifacts/noesis_mos_ft/noesis_mos_ft_v15.pt
+    [ ] run_phase_r_n15.bat → J_mean ≥ 0.65 (after N3.finetune)
+    [ ] Review T3 AutoEval overnight results (artifacts/autoeval_night1/)
+
+  HIGH PRIORITY:
+    [ ] run_phase_r_n15.bat (after N3.finetune) → J_mean ≥ 0.65
+    [ ] Phase SVC.1: pip install seed-vc + first test (Day 1)
+    [ ] Phase SVC.2: singing_voice_cloner.py (12 tests)
+    [ ] Phase QA.1: FAD(PANN) calibration — UNBLOCKED (R.REF3 done)
+    [ ] Paper v14 PDF: pdflatex via WSL/Overleaf (main.tex ready)
+
+  COMPLETED since v1.0:
+    [x] N4-N11 ALL DONE 65/65 PASS (2026-03-13)
+    [x] Edit Suite E1-E7 DONE, 68 PASS, 9 REST endpoints (2026-03-14)
+    [x] MasteringChain v3.4 / 31 stages / §MC-ACOUSTIC bypass (2026-03-14)
+    [x] 7-file doc system (31 → 7 files, 2026-03-14)
+    [x] P4.3 HTDemucs stem separation 12-band (2026-03-12)
+  PLANNED:
+    [ ] 165-track benchmark (33 genres × 5 seeds)
+    [ ] MusicGen/AudioLDM2 baseline comparison
+    [ ] MUSHRA study N=50 (Prolific.ac, IEEE TASLP)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§N.7 DIRECTORY LAYOUT (current)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  B:\Downloads\Portable\NOESIS_DHCF-FNO\
+  |
+  +-- CLAUDE.md                   ← Claude Code context (points to Protocol v1.0)
+  +-- AGENTS.md                   ← agent rules (points to Protocol v1.0)
+  +-- python_embedded\python.exe  ← ALWAYS use this; never system Python
+  |
+  +-- acestep\                    ← ORIGINAL ACE-Step package (READ-ONLY — NEVER MODIFY)
+  +-- adapter\                    ← NOESIS adapter bridge
+  +-- mastering\                  ← DSP mastering pipeline (18 stages)
+  +-- metrics\                    ← IQS, FAD, MOS, bs1770, genre_studio_threshold
+  +-- genre\                      ← 33 genres, 144 aliases, profiles v4
+  +-- core\                       ← reproducibility_v16, snapshot_utils
+  +-- cli\                        ← sdk.py (<=200 LOC orchestrator)
+  +-- tests\                      ← ~520 passing (2026-03-14)
+  +-- tools\                      ← benchmark_ab, preflight tools
+  +-- n4_macro_planner.py        ← N4 DONE 8/8 PASS
+  +-- n5_meso_planner.py         ← N5 DONE 8/8 PASS
+  +-- n7_mwm.py                  ← N7 MWM DONE 10/10 PASS
+  +-- n8_ai_band.py              ← N8 AI Band DONE 8/8 PASS
+  +-- n11_backbone.py            ← N11 Vocal DONE 8/8 PASS
+  +-- edit_suite.py              ← Edit Suite E1-E5 DONE
+  +-- singing_voice_cloner.py    ← E6 SVC (Seed-VC)
+  +-- mashup.py                  ← E7 Mashup DONE
+  +-- ace-step-ui\                ← Next.js + TS + Tailwind v4 (port 3000)
+  |
+  +-- mastering_config.yaml       ← 33 genres, all per-genre params     [CONTROL PLANE]
+  +-- pre_limiter_overrides.yaml  ← 35 genres, CF-reduction tiers        [CONTROL PLANE]
+  +-- genre_profiles_overrides.yaml ← 34 genres                          [CONTROL PLANE]
+  |
+  +-- docs\
+  |     NOESIS_DHCF_FNO_PROTOCOL_v1_0.md       ← THIS FILE (authoritative)
+  |     NOESIS_ROADMAP_v0_21.md               ← phase roadmap (TZ v1.8 retired)
+  |     (all prior protocol files = historical reference only)
+  |
+  +-- models\                     ← FROZEN weights (NEVER modify)
+  |     acestep-v15-turbo\, vae\, Qwen3-Embedding-0.6B\, acestep-5Hz-lm-0.6B\
+  |
+  +-- artifacts\
+        noesis_mos\noesis_mos_v1.pt             ← sha256=d781d747
+        autoeval_night1\                        ← T3 overnight results
+        reref3_*.jsonl                          ← R.REF3 benchmark data
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§N.8 ARCHITECTURE LAYERS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  [CONTROL PLANE]   mastering_config.yaml, genre_profiles_overrides.yaml,
+                    pre_limiter_overrides.yaml
+                    → ONLY autoeval_agent.py may write; code agents must NOT
+
+  [NOESIS CODE]     adapter\, mastering\, metrics\, genre\, core\, cli\, tools\
+                    → work zone; all rules in §11-§12 apply
+
+  [ACESTEP]         acestep\   → READ-ONLY, zero changes ever
+
+  [FROZEN MODELS]   models\    → READ-ONLY, zero changes ever
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+§N.9 SESSION CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Before session:
+    [ ] Read docs\NOESIS_DHCF_FNO_PROTOCOL_v1_0.md (this file)
+    [ ] Verify OPERATOR_GRAPH_CHECKSUM = 7c0d5aba... in operator_registry.py
+    [ ] Verify guidance_scale = 7.0 in sdk.py (NEVER 0.0, NEVER 3.0)
+    [ ] Run phase_r_direct.py → 10/10 MUSIC confirmed
+    [ ] Check NOESIS_TZ_v1_8.md §0 for current state + pending tasks
+
+  During session:
+    [ ] Full files only — no stubs, no TODO, no placeholders
+    [ ] NOESIS header in every new file (full path)
+    [ ] English only everywhere
+    [ ] No "acestep"/"ACEStep" in NOESIS code (adapter\ → # HF-COMPAT:)
+    [ ] dtype: float32 audio / float64 filter design — explicit
+    [ ] IIR poles assert at __init__
+    [ ] SHA-256 on every new dataflow output
+    [ ] >200 LOC: split orchestrator + helpers
+    [ ] WAV: soundfile float32 ONLY
+    [ ] guidance_scale=7.0, fix_nfe=8, offload_dit_to_cpu=True — NEVER change
+    [ ] Stage 11 clamp AFTER LUFS
+    [ ] J threshold: get_studio_threshold(genre) — not 0.65
+    [ ] overrides_dir gate before AGMS lookup (Invariant #16)
+
+  After session:
+    [ ] pytest → 0 failed, no regressions
+    [ ] phase_r_direct.py → 10/10 MUSIC
+    [ ] New operator → update operator_registry.py + recompute checksum + propagate
+    [ ] Update NOESIS_TZ_v1_8.md §0 with new test count + completed tasks
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CANONICAL SEAL v2.0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Sealed:     2026-03-14
+  Version:    2.0
+  Base:       v1.0 (2026-03-13) + all v2.0 additions merged
+  Author:     Ilia Bolotnikov / AMAImedia.com
+  Status:     ACTIVE — SINGLE SOURCE OF TRUTH
+
+  This seal certifies v1.0 content PRESERVED + v2.0 additions:
+    • All v1.0 formal theory (Parts 0–N, Theorems B.1–B.31, H.1–H.4,
+      E.1–E.7, A.1–A.5, C.1–C.3, F.1–F.2, G.1) preserved without modification
+    • v2.0 corrections applied in-place (see top CORRECTIONS block):
+      - AutoEval schema 791cae1f → 3073949bcdf6e22e (v1.3.0, 29 params)
+      - B_linf = 3.60972762 confirmed (CONTRACT v1.2 had 4.32539988 — error)
+      - MasteringChain v2.0/18 stages → v3.0/31 stages + §MC-ACOUSTIC
+      - N4–N11 status: PLANNED → DONE 65/65 PASS (2026-03-13)
+      - Edit Suite E1–E7 DONE, 68 PASS (2026-03-14)
+      - E6 = Seed-VC SVC (NOT CosyVoice2/TTS)
+    • WORLD_MODEL_SPEC v1.0 (453 lines) merged → Part §WIII
+    • AI_BAND_PROTOCOL v1.0 (383 lines) merged → Part §WIV
+    • CLOUD_ARCHITECTURE v1.0 (396 lines) merged → Part §WV
+    • SVC v1.0/v2.0 architecture documented (§WIV §WIV.4)
+
+  Empirical constants (sealed 2026-03-01, unchanged in v2.0):
+    B_f=1.4073 | B_linf=3.6097 | C_M=0.8912 | L_core_emp=1.0214
+    L_N_emp=17.89 | L_half_emp=258.25 | κ_empirical=0.910
+    stability_margin=0.090 (9.0%) | lambda_decay=0.094 per step
+    Snapshot schema: v14 (core) + v16 (extension, backward-compatible)
+
+*Document: NOESIS_PROTOCOL_v2_0.md*
+*Version: 2.0 (2026-03-14) | Author: Ilia Bolotnikov / AMAImedia.com*
+*Status: ACTIVE — single source of truth for all agents and sessions*
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART §WIII — MUSIC WORLD MODEL (N7 — DONE 2026-03-13)
+Formal Theory, State Dynamics, Training Protocol
+[Merged from: NOESIS_WORLD_MODEL_SPEC_v1_0.md (453 lines, 2026-03-13)]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Status:    DONE — n7_mwm.py, 10/10 PASS, K=0.077 < 0.95, latency <5ms/bar
+Depends:   NOESIS_PROTOCOL_v2_0.md (this document)
+
+CORRECTIONS vs original spec v1.0:
+  Status PLANNED/SPECIFICATION → DONE (2026-03-13, 10/10 PASS)
+  MasteringChain v2.0 (18 stages) → v3.0 (31 stages) in all references
+  Depends TZ v1.8 → NOESIS_PROTOCOL_v2_0.md
+
+# NOESIS Music World Model — Specification v1.0
+## Formal Theory, State Dynamics, Training Protocol
+
+```
+Version:   v1.0  (2026-03-13)
+Author:    Ilia Bolotnikov / AMAImedia.com
+Status:    DONE — n7_mwm.py 10/10 PASS (2026-03-13)
+Depends:   NOESIS_TZ_v1.8, ROADMAP v0.18, NOESIS-MOS v2 (Phase N3)
+```
+
+---
+
+## §1 — Position in DHCF-FNO Architecture
+
+The Music World Model (MWM) is a **Control Plane** component.
+It operates exclusively at the symbolic/latent music representation level.
+It does **not** modify or retrain any Signal Plane component.
+
+```
+Control Plane (adaptive):
+  Production Agent
+    └─ Theme Memory
+    └─ Macro Planner (N4)
+    └─ Meso Planner  (N5)
+    └─ [Music World Model]  ← THIS DOCUMENT
+    └─ Micro Planner (N6)
+
+Signal Plane (immutable, frozen):
+  DiT 2.4B (ACE-Step v1.5 Turbo)
+  VAE decoder
+  MasteringChain v3.4 (31 stages)
+```
+
+**Invariant (§INV-MWM-1):** MWM parameters are never passed to the frozen DiT.
+MWM output is a conditioning vector `S_t ∈ ℝ^512` which feeds the Micro Planner.
+The Micro Planner converts `S_t` → prompt tokens → LM → DiT conditioning.
+
+---
+
+## §2 — Formal State Space Definition
+
+### 2.1 State Vector
+
+```
+S_t ∈ ℝ^512
+```
+
+Decomposed into named sub-vectors:
+
+```
+S_t = [s_energy | s_tension | s_density | s_rhythm | s_melody | s_brightness | s_pad]
+
+Dimensions:
+  s_energy    ∈ ℝ^64   — RMS energy level, onset density proxy
+  s_tension   ∈ ℝ^64   — harmonic tension (dissonance measure)
+  s_density   ∈ ℝ^64   — instrument polyphony, spectral density
+  s_rhythm    ∈ ℝ^64   — rhythmic activity, beat strength
+  s_melody    ∈ ℝ^64   — melodic direction, contour
+  s_brightness ∈ ℝ^64  — spectral centroid proxy
+  s_pad       ∈ ℝ^128  — learned latent context (free)
+```
+
+### 2.2 Control Vector
+
+```
+u_t ∈ Ω ⊂ ℝ^k
+```
+
+Components:
+
+```
+u_t = {section_id, chord_root, chord_quality, tempo_bpm, bar_index, genre_id}
+
+  section_id     ∈ {0..7}   — intro/verse/chorus/bridge/drop/outro/fill/break
+  chord_root     ∈ {0..11}  — chromatic root
+  chord_quality  ∈ {0..23}  — maj/min/dom7/maj7/min7/dim/aug/...
+  tempo_bpm      ∈ [60,200]  — normalized to [0,1]
+  bar_index      ∈ ℕ        — position in track
+  genre_id       ∈ {0..32}  — 33 genres per genre_vocab
+```
+
+### 2.3 State Transition
+
+```
+S_{t+1} = f_θ(S_t, u_t)
+```
+
+Where `f_θ` is a Transformer decoder with parameters `θ` (trainable, 0.3B).
+
+**Continuous approximation** (for theoretical analysis only):
+
+```
+dS/dt = F(S, u)
+
+This is NOT used in inference. Inference uses the discrete form.
+```
+
+---
+
+## §3 — Stability Analysis
+
+### 3.1 Lyapunov Candidate
+
+Define:
+
+```
+V(S) = ||S||²  =  S^T S
+```
+
+**Design Constraint (not a general theorem):** For the trained `f_θ` to yield
+stable musical trajectories, training must be regularized such that:
+
+```
+𝔼[V(S_{t+1}) - V(S_t) | S_t, u_t] ≤ -α||S_t - S̄||²  + c
+
+where:
+  α > 0    — stability coefficient (hyperparameter)
+  S̄        — genre-conditioned attractor (mean state)
+  c        — bounded noise floor
+```
+
+This is enforced via **trajectory smoothness loss** during training (§6.3).
+
+**Note:** Unlike Theorem B.1 (determinism of frozen DiT), Lyapunov stability of
+MWM is a **design target**, not a mathematical guarantee from first principles.
+The training objective encodes this as a soft constraint.
+
+### 3.2 Bounded Trajectory Theorem
+
+**Theorem MWM-1 (Bounded Musical Dynamics)**
+
+If:
+1. `f_θ` is K-Lipschitz continuous: `||f_θ(x) - f_θ(y)|| ≤ K||x - y||`  with K < 1
+2. Control vector `u_t` is bounded: `||u_t|| ≤ U_max` for all t
+3. Initial state `||S_0|| ≤ S_max`
+
+Then the trajectory `{S_t}` satisfies:
+
+```
+||S_t|| ≤ S_max·K^t + U_max·C/(1-K)  for all t ≥ 0
+```
+
+where C is the Lipschitz constant of the control embedding layer.
+
+**Practical implication:** Training target K < 0.95 via weight regularization.
+This prevents musical state from diverging during long tracks (>300 bars).
+
+---
+
+## §4 — Music State Extraction (Training Labels)
+
+To train MWM, we need `S_t` labels extracted from existing audio.
+
+### 4.1 Feature Extraction Pipeline
+
+```python
+# For each bar b in track:
+def extract_state(audio_bar: np.ndarray, sr: int = 44100) -> np.ndarray:
+    """
+    Extract 64-dim state components from a single bar of audio.
+    Returns concatenated [s_e, s_t, s_d, s_r, s_m, s_b] as float32[384].
+    """
+
+    # s_energy: RMS + onset density
+    rms = np.sqrt(np.mean(audio_bar**2))
+    onsets = librosa.onset.onset_strength(y=audio_bar, sr=sr)
+    s_energy = np.array([rms, np.mean(onsets), np.max(onsets), ...])[:64]
+
+    # s_tension: chroma dissonance measure
+    chroma = librosa.feature.chroma_cqt(y=audio_bar, sr=sr)
+    s_tension = compute_harmonic_tension(chroma)[:64]
+
+    # s_density: spectral flux + zero-crossing rate
+    flux = librosa.onset.onset_strength(y=audio_bar, sr=sr, feature=librosa.feature.melspectrogram)
+    zcr = librosa.feature.zero_crossing_rate(audio_bar)[0]
+    s_density = np.concatenate([flux, zcr])[:64]
+
+    # s_rhythm: beat strength + tempo stability
+    tempo, beats = librosa.beat.beat_track(y=audio_bar, sr=sr)
+    s_rhythm = librosa.feature.tempogram(y=audio_bar, sr=sr).mean(axis=1)[:64]
+
+    # s_melody: melodic contour via fundamental frequency
+    f0 = librosa.yin(audio_bar, fmin=60, fmax=2000)
+    s_melody = compute_melody_contour(f0)[:64]
+
+    # s_brightness: spectral centroid + bandwidth
+    centroid = librosa.feature.spectral_centroid(y=audio_bar, sr=sr)[0]
+    bandwidth = librosa.feature.spectral_bandwidth(y=audio_bar, sr=sr)[0]
+    s_brightness = np.concatenate([centroid, bandwidth])[:64]
+
+    return np.concatenate([s_energy, s_tension, s_density,
+                           s_rhythm, s_melody, s_brightness]).astype(np.float32)
+```
+
+The 128-dim `s_pad` is learned (zero-initialized) — the model fills it during training.
+
+### 4.2 MuQ Encoder Alternative
+
+For higher-quality state representation, use **MuQ** (frozen) as the state backbone:
+
+```python
+# MuQ encodes audio → 768-dim embedding
+muq_embedding = muq_encoder(audio_bar)  # shape (768,)
+
+# Project to 512-dim state
+S_t = W_proj @ muq_embedding + b_proj   # W_proj ∈ ℝ^{512×768}
+```
+
+This is the preferred path when MuQ is available (NOESIS-MOS v2 infrastructure).
+
+---
+
+## §5 — Model Architecture (0.3B Transformer)
+
+### 5.1 Architecture
+
+```
+MusicWorldModel
+│
+├── State Embedding:    Linear(512 → 1024)
+├── Section Embedding:  Embedding(8 → 64)
+├── Chord Embedding:    Embedding(288 → 128)  # 12 roots × 24 qualities
+├── Tempo Embedding:    Linear(1 → 32)
+├── Bar Position:       SinPE(max_bars=512, dim=64)
+│
+├── Input Projection:   Linear(1024+64+128+32+64 → 1024)
+│
+├── Transformer Decoder:
+│     layers    = 12
+│     d_model   = 1024
+│     nhead     = 16
+│     dim_ff    = 4096
+│     dropout   = 0.1
+│     dtype     = bfloat16   ← mandatory (§INV-DTYPE)
+│
+└── Output Projection:  Linear(1024 → 512)  → S_{t+1}
+```
+
+**Parameter count estimate:**
+
+```
+Embeddings:    ~2M
+Transformer:   12 × (4×1024² + 2×1024×4096) ≈ 150M
+Projections:   ~5M
+Total:         ~157M (light) → target 300M with deeper model
+```
+
+For 0.3B target, use:
+```
+layers = 24, d_model = 1024, nhead = 16, dim_ff = 4096
+```
+
+### 5.2 Forward Pass
+
+```python
+class MusicWorldModel(nn.Module):
+    """
+    NOESIS Music World Model v1.0
+    State: S_t ∈ ℝ^512
+    Input: (S_t, chord_t, section_t, tempo_t, bar_idx_t)
+    Output: S_{t+1} ∈ ℝ^512
+    Constraint: K < 0.95 (Lipschitz, enforced via spectral normalization)
+    """
+
+    def forward(
+        self,
+        state: Tensor,      # (B, T, 512)
+        chord: Tensor,      # (B, T) int  [root*24 + quality]
+        section: Tensor,    # (B, T) int  [0..7]
+        tempo: Tensor,      # (B, T, 1)  float [0,1]
+        bar_idx: Tensor,    # (B, T) int
+    ) -> Tensor:            # (B, T, 512)  — predicted S_{t+1}
+
+        s = self.state_embed(state)         # (B, T, 1024)
+        c = self.chord_embed(chord)         # (B, T, 128)
+        sec = self.section_embed(section)   # (B, T, 64)
+        t = self.tempo_embed(tempo)         # (B, T, 32)
+        pos = self.pos_enc(bar_idx)         # (B, T, 64)
+
+        x = torch.cat([s, c, sec, t, pos], dim=-1)  # (B, T, 1312)
+        x = self.input_proj(x)                        # (B, T, 1024)
+
+        # Causal mask: each bar only attends to previous bars
+        mask = nn.Transformer.generate_square_subsequent_mask(x.size(1), device=x.device)
+        x = self.transformer(x, mask=mask)            # (B, T, 1024)
+
+        next_state = self.output_proj(x)              # (B, T, 512)
+        return next_state
+```
+
+---
+
+## §6 — Training Protocol
+
+### 6.1 Dataset
+
+```
+Source:       NOESIS-MOS v2 corpus (30k professional + AGMS-annotated tracks)
+              + FMA-large (public domain)
+              + Jamendo (licensed)
+Target size:  20k–50k tracks with bar-level annotations
+Bar length:   1 bar = variable samples (tempo-adaptive)
+Context:      T = 256 bars per training sequence
+```
+
+### 6.2 Preprocessing
+
+```
+Step 1: Segment each track into bars (beat-tracking via librosa/madmom)
+Step 2: Extract (S_t, chord_t, section_t, tempo_t) per bar
+Step 3: Pack into WebDataset shards (matches NOESIS-MOS v2 pipeline)
+Step 4: Store as tar shards: {audio.npy, state.npy, chords.json, meta.json}
+```
+
+### 6.3 Loss Function
+
+```
+L_total = L_pred + λ_smooth · L_smooth + λ_lyap · L_lyap + λ_mos · L_mos
+
+L_pred   = MSE(S_pred, S_target)           — primary prediction loss
+L_smooth = ||S_{t+1} - S_t||² mean        — trajectory smoothness (Lyapunov proxy)
+L_lyap   = ReLU(||S_{t+1}||² - ||S_t||²) — energy decrease regularizer
+L_mos    = MSE(MOS(audio(S_pred)), MOS(audio(S_true)))  — perceptual reward (optional)
+
+Hyperparameters:
+  λ_smooth = 0.1
+  λ_lyap   = 0.05
+  λ_mos    = 0.02  (only when NOESIS-MOS v2 is available)
+```
+
+### 6.4 Optimizer
+
+```
+AdamW
+  lr        = 3e-4
+  weight_decay = 0.01
+  betas     = (0.9, 0.95)
+
+Scheduler: CosineAnnealingLR
+  T_max = 100k steps
+  eta_min = 1e-6
+
+Batch: 32 sequences × 256 bars = 8192 bars/step
+Hardware: CPU training acceptable (0.3B); GPU preferred for speed
+dtype: bfloat16 (§INV-DTYPE)
+```
+
+### 6.5 Self-Play Extension
+
+After baseline training, enable self-play loop:
+
+```
+for iteration in range(N_selfplay):
+    # Generate trajectories from current MWM
+    S_trajectory = mwm.rollout(u_sequence)       # shape (T, 512)
+
+    # Micro Planner → prompt → frozen DiT → audio
+    audio = generation_pipeline(S_trajectory)
+
+    # Score with NOESIS-MOS v2
+    mos_score = noesis_mos_v2(audio)
+
+    # Add to dataset if above threshold
+    if mos_score > MOS_THRESHOLD_SELFPLAY:       # e.g. 3.5
+        dataset.add(S_trajectory, mos_score)
+
+    # Periodic retrain
+    if iteration % RETRAIN_INTERVAL == 0:
+        mwm.finetune(dataset.top_k(SELFPLAY_TOP_FRAC))
+```
+
+**Constraint (§INV-MWM-2):** Self-play NEVER modifies frozen DiT weights.
+Self-play only modifies MWM parameters θ.
+
+---
+
+## §7 — Integration with Existing Pipeline
+
+### 7.1 Connection to Micro Planner (N6)
+
+```
+MWM Output:   S_t ∈ ℝ^512
+                  │
+                  ▼
+           Micro Planner (N6)
+           maps S_t → ACE-Step LM tokens
+           via learned projection W_micro ∈ ℝ^{d_lm × 512}
+                  │
+                  ▼
+           Frozen LM (662M) → DiT 2.4B
+```
+
+### 7.2 Connection to IQS / NOESIS-MOS
+
+MWM-predicted state is used to pre-condition mastering:
+
+```python
+# MastCond: extract target mastering params from predicted state
+lufs_target = state_to_lufs(S_t, genre_id)       # genre-aware LUFS
+dr_target   = state_to_dr(S_t, genre_id)          # dynamic range target
+spectral_tilt = state_to_tilt(S_t)               # energy distribution
+
+# Feed to MasteringChain overrides
+overrides = {"target_lufs": lufs_target, "dr_target": dr_target}
+mastering_chain.apply(audio, overrides=overrides)
+```
+
+---
+
+## §8 — Deployment Constraints
+
+```
+Inference location:  CPU (mandatory — preserves GPU VRAM for DiT)
+Memory:              0.3B × 2 bytes (bfloat16) ≈ 600 MB RAM
+Latency per bar:     < 5 ms on i7-12700H
+Max track length:    512 bars (≈ 7.5 min at 120 BPM)
+```
+
+---
+
+## §9 — Error Codes
+
+```
+§EC-MWM-1  state.shape[-1] != 512
+§EC-MWM-2  state contains NaN or Inf
+§EC-MWM-3  K_lipschitz >= 1.0 at eval (divergent model)
+§EC-MWM-4  bar_idx out of range [0, 511]
+§EC-MWM-5  chord token > 287 (12×24-1)
+§EC-MWM-6  section_id > 7
+```
+
+---
+
+## §10 — Roadmap Position
+
+```
+Phase N7 — Music World Model
+  Status:    PLANNED (pending N4/N5/N6 Planners)
+  Prereq:    NOESIS-MOS v2 (Phase N3) — for perceptual reward in self-play
+  Prereq:    Macro Planner (N4) — provides section_id labels
+  Prereq:    Meso Planner  (N5) — provides chord labels
+  Estimate:  4–6 weeks after N4/N5/N6 complete
+  Hardware:  CPU training (i7-12700H, 64GB DDR5)
+  GPU use:   Only for DiT inference during self-play evaluation
+```
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART §WIV — AI BAND PROTOCOL (N8 — DONE 2026-03-13)
+Multi-Agent Instrument Coordination for Deterministic Music Generation
+[Merged from: NOESIS_AI_BAND_PROTOCOL_v1_0.md (383 lines, 2026-03-13)]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Status:    DONE — n8_ai_band.py, 8/8 PASS, 5 agents, stateless conductor
+Depends:   §WIII (Music World Model, DONE)
+
+CORRECTIONS vs original spec v1.0:
+  Status SPECIFICATION/PLANNED → DONE (2026-03-13, 8/8 PASS)
+  §6 Vocal: N11 Backbone DONE (Qwen3-TTS-1.7B, 8/8 PASS); E6=Seed-VC SVC
+  INV-SVC-V2-1 added: Qwen3-Omni OFFLINE only (never at inference)
+
+VOCAL vs SVC CLARIFICATION (INV-E6 — critical):
+  VocalAgent (N8): generates PROMPT TOKENS that condition DiT. Control Plane.
+  N11 Backbone: Qwen3-TTS-12Hz-1.7B LoRA. Vocal GENERATION (text→singing).
+  NOESIS-SVC E6: Seed-VC fine-tuned on 200GB studio vocals. Timbral CLONING.
+  These are THREE DIFFERENT components. Do NOT confuse.
+  CosyVoice2/OpenVoice are TTS — they CANNOT sing melodies. Excluded from E6.
+
+# NOESIS AI Band Protocol v1.0
+## Multi-Agent Instrument Coordination for Deterministic Music Generation
+
+```
+Version:   v1.0  (2026-03-13)
+Author:    Ilia Bolotnikov / AMAImedia.com
+Status:    DONE — 8/8 PASS (2026-03-13)
+Depends:   NOESIS_TZ_v1.8, NOESIS_WORLD_MODEL_SPEC_v1_0
+```
+
+---
+
+## §1 — Design Philosophy
+
+The AI Band is a **symbolic multi-agent layer** operating entirely within
+the Control Plane. Its sole purpose is to decompose the Music World Model
+state `S_t` into per-instrument token streams that condition the frozen
+ACE-Step LM → DiT pipeline.
+
+**Key invariant (§INV-BAND-1):** No band agent modifies DiT or LM weights.
+Band agents produce **prompt token sequences** that are passed to the
+existing frozen generation pipeline unchanged.
+
+**Why multi-agent:** A single LM prompt trying to encode all instruments
+simultaneously leads to semantic dilution. Per-instrument specialization
+allows each agent to optimize for its domain (rhythmic, harmonic, melodic,
+timbral) while the Band Conductor enforces global coherence.
+
+---
+
+## §2 — Agent Roster
+
+### Standard 5-Agent Configuration
+
+```
+┌──────────────────┬────────────┬─────────────────────────────────────────┐
+│ Agent            │ Params     │ Domain                                  │
+├──────────────────┼────────────┼─────────────────────────────────────────┤
+│ DrumAgent        │ ~100M      │ Rhythm: kick, snare, hats, percussion   │
+│ BassAgent        │ ~100M      │ Sub-bass, bass (30–250 Hz, tonal)       │
+│ HarmonyAgent     │ ~150M      │ Chords, pads, comping                   │
+│ MelodyAgent      │ ~200M      │ Lead, melodic lines, hooks              │
+│ VocalAgent       │ ~700M      │ Vocals (phoneme → pitch → diffusion)    │
+└──────────────────┴────────────┴─────────────────────────────────────────┘
+Total: ~1.25B (all on CPU, GPU reserved for DiT 2.4B + vocal diffusion)
+```
+
+### Genre-Extended Configuration (optional)
+
+```
+FXAgent     ~50M   — Risers, impacts, transitions, atmosphere
+StringAgent ~100M  — Orchestral strings (cinematic genres)
+BrassAgent  ~100M  — Brass section (jazz, cinematic)
+```
+
+---
+
+## §3 — Band Conductor
+
+The Band Conductor is a **stateless rule-based coordinator** (no neural net).
+It receives the output of the Music World Model and dispatches messages to agents.
+
+### 3.1 Conductor Inputs
+
+```python
+@dataclass(frozen=True)
+class ConductorState:
+    section_id:    int           # 0..7
+    bar_index:     int           # global bar position
+    chord_root:    int           # 0..11
+    chord_quality: int           # 0..23
+    tempo_bpm:     float         # [60, 200]
+    genre_id:      int           # 0..32
+    world_state:   np.ndarray    # S_t ∈ ℝ^512 (from MWM)
+    energy_norm:   float         # s_energy component norm, [0,1]
+    density_norm:  float         # s_density component norm, [0,1]
+```
+
+### 3.2 Conductor Dispatch Logic
+
+```python
+class BandConductor:
+    """
+    Stateless conductor. Produces per-agent context from ConductorState.
+    No learnable parameters. Deterministic given ConductorState.
+    """
+
+    def dispatch(self, cs: ConductorState) -> Dict[str, AgentContext]:
+
+        return {
+            "drum":    self._drum_context(cs),
+            "bass":    self._bass_context(cs),
+            "harmony": self._harmony_context(cs),
+            "melody":  self._melody_context(cs),
+            "vocal":   self._vocal_context(cs),
+        }
+
+    def _drum_context(self, cs: ConductorState) -> AgentContext:
+        return AgentContext(
+            state          = cs.world_state[:64],     # s_rhythm slice
+            section        = cs.section_id,
+            energy         = cs.energy_norm,
+            intensity_hint = _section_drum_intensity[cs.section_id],
+            fill_allowed   = cs.bar_index % 4 == 3,   # fill on bar 4 of phrase
+        )
+
+    def _bass_context(self, cs: ConductorState) -> AgentContext:
+        return AgentContext(
+            state       = cs.world_state[64:128],     # s_tension slice
+            section     = cs.section_id,
+            chord_root  = cs.chord_root,
+            chord_type  = cs.chord_quality,
+            sub_mode    = cs.genre_id in SUB_BASS_GENRES,  # EDM/neurofunk/hip-hop
+        )
+
+    def _melody_context(self, cs: ConductorState) -> AgentContext:
+        return AgentContext(
+            state          = cs.world_state[256:320],  # s_melody slice
+            section        = cs.section_id,
+            chord_root     = cs.chord_root,
+            chord_quality  = cs.chord_quality,
+            active         = cs.section_id not in {0, 5},  # no melody in intro/outro
+        )
+
+    def _vocal_context(self, cs: ConductorState) -> AgentContext:
+        return AgentContext(
+            state          = cs.world_state[320:384],  # s_brightness slice
+            section        = cs.section_id,
+            active         = cs.section_id in {1, 2, 3, 4},  # verse/chorus/bridge/drop
+            phoneme_seed   = cs.bar_index,              # deterministic per bar
+        )
+```
+
+### 3.3 Section Intensity Table (Sealed)
+
+```python
+_section_drum_intensity = {
+    0: 0.3,   # intro
+    1: 0.6,   # verse
+    2: 0.9,   # chorus
+    3: 0.5,   # bridge
+    4: 1.0,   # drop
+    5: 0.1,   # outro
+    6: 0.7,   # fill
+    7: 0.4,   # break
+}
+```
+
+---
+
+## §4 — Agent Message Protocol
+
+### 4.1 Message Format
+
+```python
+@dataclass(frozen=True)
+class AgentContext:
+    state:          np.ndarray    # Sub-vector of S_t (64 dims)
+    section:        int
+    energy:         float
+    bar_index:      int           # inherited from ConductorState
+    # Agent-specific optional fields below
+    chord_root:     Optional[int]   = None
+    chord_quality:  Optional[int]   = None
+    intensity_hint: Optional[float] = None
+    fill_allowed:   Optional[bool]  = None
+    sub_mode:       Optional[bool]  = None
+    active:         Optional[bool]  = True
+    phoneme_seed:   Optional[int]   = None
+
+
+@dataclass(frozen=True)
+class AgentOutput:
+    agent_id:       str
+    bar_index:      int
+    prompt_tokens:  List[str]     # text tokens for ACE-Step LM
+    weight:         float         # mixing weight [0, 1]
+    checksum:       str           # SHA-256[:8] of prompt_tokens
+```
+
+### 4.2 Message Bus
+
+```
+Type:     In-process Python queue (no external broker needed for local mode)
+Protocol: Synchronous per-bar (all agents process bar t before advancing to t+1)
+
+For distributed/cloud mode:
+  Broker: Redis Streams (preferred) or NATS
+  Topic naming: noesis.band.{agent_id}.bar.{bar_index}
+  Message format: msgpack-encoded AgentContext
+  Timeout: 50 ms per agent per bar
+```
+
+### 4.3 Synchronization Contract
+
+```
+§INV-BAND-2 (Bar Synchrony):
+  All agents MUST complete generation for bar t before bar t+1 begins.
+  No agent may reference S_{t+1} when processing bar t.
+
+§INV-BAND-3 (Determinism):
+  Given identical ConductorState, all AgentOutput values MUST be identical.
+  Agents use bar_index as their RNG seed (no hidden state).
+
+§INV-BAND-4 (Non-interference):
+  Agents do NOT communicate with each other directly.
+  All inter-agent coordination flows through the Conductor only.
+```
+
+---
+
+## §5 — Prompt Token Generation
+
+### 5.1 Token Vocabulary
+
+Each agent produces text tokens that extend the ACE-Step prompt.
+
+```
+Base prompt (from Production Agent):
+  "edm festival drop, 128 BPM, F minor, aggressive bass"
+
+DrumAgent appends:
+  "heavy kick, sharp snare, tight hihats, 808 clap"
+
+BassAgent appends:
+  "sub bass, sliding F root, 808 octave"
+
+HarmonyAgent appends:
+  "Fm7 pad, dark synth, detuned supersaw"
+
+MelodyAgent appends:
+  "rising lead synth, melodic hook"
+
+VocalAgent appends:  (if section is active)
+  "female vocal, breathy, emotional"
+
+Final prompt:
+  "edm festival drop, 128 BPM, F minor, aggressive bass,
+   heavy kick, sharp snare, tight hihats, 808 clap,
+   sub bass, sliding F root, 808 octave,
+   Fm7 pad, dark synth, detuned supersaw,
+   rising lead synth, melodic hook,
+   female vocal, breathy, emotional"
+```
+
+### 5.2 Token Weight Mixing
+
+The conductor assigns mixing weights based on `energy_norm` and section:
+
+```python
+def compute_weights(cs: ConductorState) -> Dict[str, float]:
+    e = cs.energy_norm
+    return {
+        "drum":    0.8 + 0.2 * e,                      # always prominent
+        "bass":    0.6 + 0.3 * e,
+        "harmony": 0.5 - 0.2 * e,                      # reduces at drop
+        "melody":  0.4 + 0.4 * (cs.section_id == 2),   # boost in chorus
+        "vocal":   0.7 if cs.section_id in {1,2,3} else 0.1,
+    }
+```
+
+Tokens are concatenated in weight-descending order, most important first.
+
+---
+
+## §6 — Vocal Agent Special Case
+
+The Vocal Agent pipeline differs from instrument agents because it uses
+a **separate vocal diffusion model** (0.7B, separate GPU pass).
+
+### 6.1 Vocal Pipeline
+
+```
+VocalAgent
+    │
+    ├── Lyrics (from Production Agent / user input)
+    │
+    ▼
+Phoneme Encoder   [CPU, rule-based + small LM]
+    │
+    ▼
+Pitch Contour     [from MWM s_melody slice]
+    │
+    ▼
+Vocal Diffusion   [0.7B, GPU]   ← Phase N11 (future)
+    │
+    ▼
+Vocal Audio (stems.vocals)
+    │
+    ▼
+MasteringChain.stem_aware_node
+    │
+    ▼
+Final Mix
+```
+
+### 6.2 Vocal Integration with Stem System
+
+NOESIS stem standard defines `vocals` as frequency band 120–8000 Hz.
+The vocal diffusion output feeds directly into `stem_mastering.py`
+with the `vocals` stem type, enabling stem-aware mastering.
+
+**Until Phase N11:** Vocal generation is handled by the frozen ACE-Step
+DiT itself via the `[vocals: ...]` tag in the base prompt.
+No separate vocal diffusion model is needed for initial deployment.
+
+---
+
+## §7 — Integration with Existing NOESIS Components
+
+### 7.1 Connection to AGMS (N2.x)
+
+Band agent prompt tokens are genre-conditioned via AGMS:
+
+```python
+genre_profile = genre_mastering_master_profiles.get_profile(genre_id)
+# Agents receive genre_profile.instrument_emphasis as weighting hint
+```
+
+### 7.2 Connection to Segment Control (P2.2)
+
+The 14 segment control tags from `structure_controller_v4.py` map directly
+to Conductor section dispatch:
+
+```
+[verse]    → section_id=1
+[chorus]   → section_id=2
+[bridge]   → section_id=3
+[drop]     → section_id=4
+[build]    → section_id=6 (fill)
+[break]    → section_id=7
+```
+
+### 7.3 Snapshot Integration
+
+AgentOutput checksums are recorded in the NOESIS snapshot (v16+):
+
+```json
+{
+  "band_checksums": {
+    "drum_bar_000": "a1b2c3d4",
+    "bass_bar_000": "e5f6a7b8",
+    ...
+  }
+}
+```
+
+---
+
+## §8 — Deployment Phases
+
+```
+Phase N8.0  BandConductor (stateless, no ML)       — 1 week
+Phase N8.1  DrumAgent (0.1B, genre-conditioned)    — 2 weeks
+Phase N8.2  BassAgent (0.1B)                       — 2 weeks
+Phase N8.3  HarmonyAgent (0.15B)                   — 2 weeks
+Phase N8.4  MelodyAgent (0.2B)                     — 3 weeks
+Phase N8.5  VocalAgent prompt integration          — 1 week (no diffusion yet)
+Phase N11   Vocal Diffusion (0.7B) — separate GPU  — 4–6 weeks (long-term)
+```
+
+**All phases require Phase N7 (Music World Model) as prerequisite.**
+
+---
+
+## §9 — Error Codes
+
+```
+§EC-BAND-1  AgentContext.state.shape != (64,)
+§EC-BAND-2  AgentOutput.weight not in [0, 1]
+§EC-BAND-3  Bar synchrony violation (t+1 before t complete)
+§EC-BAND-4  Agent timeout > 50 ms in distributed mode
+§EC-BAND-5  prompt_tokens exceeds ACE-Step max token limit (512)
+§EC-BAND-6  Checksum mismatch on AgentOutput (non-determinism detected)
+```
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART §WV — CLOUD ARCHITECTURE (N12 — FUTURE)
+Infrastructure for 10M+ Users: Services, Scaling, Marketplace
+[Merged from: NOESIS_CLOUD_ARCHITECTURE_v1_0.md (396 lines, 2026-03-13)]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Status:    FUTURE — Phase N12 (prerequisites: N4/N5/N7/N8 stable + J≥0.65)
+Current:   ALL development on Mechrevo GM7AG0M (RTX 3060 6GB), local mode only
+Depends:   §WIII (MWM), §WIV (AI Band) — both DONE 2026-03-13
+
+CORRECTIONS vs original spec v1.0:
+  MasteringChain v2.0 (18 stages) → v3.0 (31 stages) in generation flow
+  Added SVC Worker (Seed-VC) to generation pipeline
+  N8 prerequisites updated: DONE (was PLANNED)
+  NOESIS_DEPLOY_MODE "local" confirmed as only active mode
+
+# NOESIS Cloud Architecture v1.0
+## Infrastructure for 10M+ Users: Services, Scaling, Marketplace
+
+```
+Version:   v1.0  (2026-03-13)
+Author:    Ilia Bolotnikov / AMAImedia.com
+Status:    FUTURE — after N12 prerequisites complete
+Depends:   NOESIS_TZ_v1.8, NOESIS_AI_BAND_PROTOCOL_v1_0
+```
+
+---
+
+## §1 — Architecture Principles
+
+The cloud architecture follows the same DHCF-FNO layering as the local system:
+
+```
+Signal Plane  → GPU pods    (DiT inference, vocal diffusion)
+Control Plane → CPU pods    (planners, MWM, band agents, mastering)
+Platform Layer → managed    (API gateway, auth, storage, marketplace)
+```
+
+**Non-goals:** This document does NOT cover model training infrastructure.
+Training runs locally on RTX 3060 / CPU. Cloud is inference-only.
+
+---
+
+## §2 — Service Decomposition
+
+### 2.1 Core Services (Tier 1 — Always Running)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  SERVICE              PORT    TYPE      RESOURCE PROFILE             │
+├─────────────────────────────────────────────────────────────────────┤
+│  api-gateway          443     HTTP/WS   CPU pod, 2 vCPU, 4 GB RAM   │
+│  auth-service         8001    gRPC      CPU pod, 1 vCPU, 2 GB RAM   │
+│  planning-service     8002    gRPC      CPU pod, 4 vCPU, 16 GB RAM  │
+│  mastering-service    8003    gRPC      CPU pod, 4 vCPU, 16 GB RAM  │
+│  evaluation-service   8004    gRPC      CPU pod, 4 vCPU, 16 GB RAM  │
+│  queue-service        8005    Redis     CPU pod, 2 vCPU, 8 GB RAM   │
+│  storage-service      8006    S3 proxy  CPU pod, 2 vCPU, 4 GB RAM   │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### 2.2 GPU Services (Tier 2 — Autoscaled)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  SERVICE              GPU         VRAM   BATCH   LATENCY target      │
+├─────────────────────────────────────────────────────────────────────┤
+│  generation-worker    RTX 4090    24 GB  2–4     30–60 s/track       │
+│  vocal-worker         A10G        24 GB  2–4     10–20 s/vocal       │
+│  preview-worker       RTX 4060    8 GB   4–8     5–8 s/preview       │
+└─────────────────────────────────────────────────────────────────────┘
+Note: RTX 3060 is local dev target. Production uses A-series / consumer 40-series.
+```
+
+### 2.3 Platform Services (Tier 3 — Stateful)
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  SERVICE              TYPE        STORAGE   PURPOSE                  │
+├─────────────────────────────────────────────────────────────────────┤
+│  track-registry       PostgreSQL  256 GB    Track metadata + seeds   │
+│  agent-registry       PostgreSQL  64 GB     AI Band agent presets    │
+│  object-storage       R2/MinIO    scalable  Audio files, stems       │
+│  vector-db            FAISS/Milvus 32 GB   Theme embeddings          │
+│  telemetry-db         TimescaleDB 128 GB   NOESIS JSONL telemetry    │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## §3 — Request Flow
+
+### 3.1 Standard Generation Flow
+
+```
+Client (web/mobile/API)
+    │  POST /v1/generate  {prompt, genre, seed, style}
+    ▼
+API Gateway  (rate-limit, auth, routing)
+    │
+    ▼
+Planning Service  [CPU]
+    ├── Production Agent → music plan
+    ├── Macro Planner    → section tokens
+    ├── Meso Planner     → chord tokens
+    └── MWM              → S_t trajectory (T bars)
+    │
+    ▼
+Generation Queue  [Redis FIFO]
+    │  job: {plan, seed, prompt_tokens, priority}
+    ▼
+Generation Worker  [GPU]
+    ├── ACE-Step LM (662M)
+    ├── DiT 2.4B  (fix_nfe=8, guidance_scale=7.0)
+    └── VAE decode
+    │
+    ▼
+Mastering Service  [CPU]
+    └── MasteringChain v2.0 (18 stages, genre-aware AGMS)
+    │
+    ▼
+Evaluation Service  [CPU]
+    └── NOESIS-MOS v2 + IQS v0.8
+    │
+    ▼
+Object Storage  (audio.wav + stems.tar)
+    │
+    ▼
+Track Registry  (metadata: seed, checksum, IQS, J)
+    │
+    ▼
+Client  ← download URL + metrics JSON
+```
+
+### 3.2 Preview (Instant Demo) Flow
+
+```
+Client  (no auth required)
+    │  POST /v1/preview  {prompt}  (rate-limited: 3/IP/hour)
+    ▼
+API Gateway  → preview-queue  (separate high-priority queue)
+    │
+    ▼
+Preview Worker  [RTX 4060 / smaller GPU]
+    ├── Planning Service (simplified: no MWM, rule-based plan)
+    ├── DiT (fix_nfe=6 for speed)
+    ├── Mastering (lightweight: 8 stages only)
+    └── 8-second preview clip
+    │
+    ▼
+Object Storage (preview_XXXX.ogg, 64kbps, 8s)
+    │
+    ▼
+Client  ← preview URL  (expires 1 hour)
+```
+
+Preview latency target: **≤ 8 seconds** end-to-end.
+
+---
+
+## §4 — Autoscaling Policy
+
+### 4.1 Generation Workers
+
+```yaml
+autoscaler:
+  metric: generation_queue_depth
+  scale_up:
+    threshold: queue_depth > 10
+    step: +2 workers
+    cooldown: 60s
+  scale_down:
+    threshold: queue_depth < 2 AND worker_idle > 120s
+    step: -1 worker
+    cooldown: 300s
+  min_workers: 2
+  max_workers: 150    # target for 10M user scenario
+```
+
+### 4.2 10M User Capacity Estimate
+
+```
+Assumptions:
+  DAU (daily active users):     100,000  (1% of 10M)
+  Tracks/user/day:              3
+  Track generation time:        45 s
+  Preview requests/user/day:    10
+  Preview time:                 8 s
+
+GPU-hours/day:
+  Full tracks:  100k × 3 × 45s = 3,750,000 s = 1,042 GPU-hours
+  Previews:     100k × 10 × 8s = 8,000,000 s = 2,222 GPU-hours
+  Total:                                      ≈ 3,264 GPU-hours/day
+
+At 85% utilization:
+  Required GPU workers (full):  1,042 / 24 / 0.85 ≈ 51 GPUs
+  Required GPU workers (preview): 2,222 / 24 / 0.85 ≈ 109 GPUs
+  Total:                        ≈ 160 GPU nodes
+
+CPU pods scale linearly with GPU workers (1 CPU pod per 2 GPU workers).
+  CPU pods total: ≈ 80
+
+Storage (at 5 MB/track):
+  Daily:  300,000 tracks × 5 MB = 1.5 TB/day
+  Annual: ≈ 547 TB → 1 PB with stems
+```
+
+---
+
+## §5 — Public API Specification
+
+### 5.1 REST Endpoints
+
+```
+POST   /v1/generate
+  Body:   {prompt, genre, seed?, duration_s?, stems_enabled?}
+  Return: {job_id, estimated_time_s}
+
+GET    /v1/jobs/{job_id}
+  Return: {status, progress, audio_url?, metrics?}
+
+POST   /v1/preview
+  Body:   {prompt}
+  Return: {preview_url, expires_at}
+
+POST   /v1/master
+  Body:   {audio_url, genre?, target_lufs?}
+  Return: {job_id}
+
+POST   /v1/remix
+  Body:   {track_id, prompt, style?}
+  Return: {job_id}
+
+GET    /v1/tracks/{track_id}
+  Return: {metadata, audio_url, stems_url?, metrics}
+
+GET    /v1/tracks/{track_id}/stems
+  Return: {stems: [{name, url, frequency_range}]}
+
+POST   /v1/agents
+  Body:   {name, genre, style_embedding, instrument_weights}
+  Return: {agent_id}
+
+GET    /v1/agents
+  Query:  ?genre=&sort=popular&limit=20
+  Return: [{agent_id, name, plays, rating}]
+```
+
+### 5.2 WebSocket (Live Generation)
+
+```
+WS /v1/live
+  Client → Server: {prompt, genre, seed, event_type}
+  Server → Client: {type: "segment", bar_index, audio_chunk_b64, state_vector}
+                   {type: "complete", track_id}
+                   {type: "error", code, message}
+
+event_type options:
+  "start"          — begin new live session
+  "section_change" — notify conductor of manual section change
+  "energy_boost"   — increase energy (DJ command)
+  "energy_drop"    — decrease energy
+  "bpm_change"     — tempo shift
+```
+
+---
+
+## §6 — Marketplace Layer
+
+### 6.1 Track Registry Schema
+
+```sql
+CREATE TABLE tracks (
+    track_id     UUID PRIMARY KEY,
+    creator_id   UUID NOT NULL,
+    prompt       TEXT,
+    genre        VARCHAR(64),
+    seed         BIGINT NOT NULL,
+    checksum     CHAR(64) NOT NULL,        -- SHA-256 of audio WAV
+    mos_score    FLOAT,
+    iqs_score    FLOAT,
+    j_score      FLOAT,
+    lufs         FLOAT,
+    duration_s   FLOAT,
+    agent_id     UUID,
+    created_at   TIMESTAMPTZ DEFAULT NOW(),
+    public       BOOLEAN DEFAULT FALSE,
+    license      VARCHAR(32) DEFAULT 'cc-by'
+);
+```
+
+### 6.2 Agent Registry Schema
+
+```sql
+CREATE TABLE agents (
+    agent_id        UUID PRIMARY KEY,
+    creator_id      UUID NOT NULL,
+    name            VARCHAR(128) NOT NULL,
+    genre_id        INTEGER,
+    style_embedding BYTEA,               -- 256-dim float32
+    config_json     JSONB,               -- instrument weights, mastering overrides
+    plays           BIGINT DEFAULT 0,
+    revenue_share   FLOAT DEFAULT 0.70,  -- 70% to creator
+    created_at      TIMESTAMPTZ DEFAULT NOW()
+);
+```
+
+### 6.3 Revenue Model
+
+```
+Tier        Price       Tracks/day    Stems    Commercial    Agent access
+Free        $0          5             No       No            Public only
+Creator     $12/mo      100           Yes      Yes           All
+Pro         $29/mo      unlimited     Yes      Yes           All + API 1k/mo
+Enterprise  $199/mo     unlimited     Yes      Yes           Unlimited API
+API credits $0.05/track (pay-as-you-go)
+
+Agent marketplace:
+  Creator earns:  70% of usage revenue (when their agent is used)
+  Platform earns: 30%
+  Payout:         Monthly via Stripe
+```
+
+---
+
+## §7 — Reproducibility in Cloud
+
+Every cloud-generated track preserves the NOESIS determinism guarantee:
+
+```json
+{
+  "track_id": "uuid",
+  "seed": 42,
+  "model_version": "acestep-v1.5-turbo",
+  "guidance_scale": 7.0,
+  "fix_nfe": 8,
+  "mastering_chain_version": "2.0",
+  "operator_graph_checksum": "7c0d5aba...",
+  "iqs_weights_checksum": "12c2f47c...",
+  "audio_sha256": "...",
+  "snapshot_merkle_root": "..."
+}
+```
+
+**Re-generation guarantee:** Given `{track_id, seed}`, the platform can
+reproduce the identical waveform at any future time, provided model weights
+are archived. This is enforced by the NOESIS telemetry JSONL system (v16+).
+
+---
+
+## §8 — Security Contracts
+
+```
+§SEC-1  All seeds are user-visible (transparency)
+§SEC-2  Audio checksums are stored immutably in PostgreSQL
+§SEC-3  API keys rotate every 90 days
+§SEC-4  GPU workers are ephemeral containers (no persistent state)
+§SEC-5  No training data is collected from user-generated audio without consent
+§SEC-6  DMCA takedown via track_id → audio_sha256 lookup
+§SEC-7  Rate limits: Free=5/day, Creator=100/day, IP preview=3/hour
+```
+
+---
+
+## §9 — Deployment Timeline
+
+```
+Phase N12.0  API Gateway + Auth + Queue            — 2 weeks
+Phase N12.1  Generation Worker (cloud DiT)         — 2 weeks
+Phase N12.2  Mastering + Evaluation Services       — 1 week
+Phase N12.3  Track Registry + Object Storage       — 1 week
+Phase N12.4  Public API v1 (generate/master/stems) — 2 weeks
+Phase N12.5  Marketplace (agents + sharing)        — 4 weeks
+Phase N12.6  Live Generation WebSocket             — 4 weeks
+Phase N12.7  Scale to 10M user capacity            — ongoing
+
+Prerequisites: N4 (Macro), N5 (Meso), N7 (MWM), N8 (AI Band) all DONE
+Estimated start: After full local pipeline validates J ≥ 0.65 on all 33 genres
+```
+
+---
+
+## §10 — Local Development Mode
+
+The cloud architecture degrades gracefully to local mode:
+
+```python
+NOESIS_DEPLOY_MODE = os.getenv("NOESIS_DEPLOY_MODE", "local")
+# "local"  — single process, RTX 3060, no cloud services
+# "docker" — docker-compose, all services on localhost
+# "cloud"  — full Kubernetes deployment
+
+if NOESIS_DEPLOY_MODE == "local":
+    generation_worker = LocalGenerationWorker(
+        offload_dit_to_cpu=True,
+        guidance_scale=7.0,
+        fix_nfe=8,
+    )
+    mastering_service = InProcessMasteringService()
+    queue = InMemoryQueue()
+```
+
+**Current status:** All development runs in `local` mode on Mechrevo GM7AG0M
+(RTX 3060 6GB, i7-12700H, 64GB DDR5). Cloud deployment is Phase N12 (future).
+
+---
+
+## PART N.4 — MASTERING CHAIN FIXES v3.0+ (2026-03-18 ADDENDUM)
+
+### §N.4.1 — Critical Bugs Fixed
+
+BUG-1 [CRITICAL]: Stage 6 StemAwareNode.process_audio() MISSING
+  Symptom: mastering_chain.py called stem_node.process_audio() which did not exist
+  Fix:     Added process_audio(audio, sr, genre) to StemAwareNode
+  Status:  FIXED 2026-03-18
+
+BUG-2 [HIGH]: Vocal tilt +0.5dB -> +3.5dB
+  Symptom: ACE-Step guidance_scale=7.0 underlevels vocals -8..-10dB
+  Fix:     high_gain_db: 0.5 -> 3.5dB + narrow peak +2.5dB@3kHz
+  Status:  FIXED 2026-03-18
+
+BUG-3 [HIGH]: CL-loop pumping (_CL_MAX_PASSES=4)
+  Symptom: 4 passes x +3dB/pass = +12dB swing -> audible pumping
+  Fix:     _CL_MAX_PASSES: 4 -> 2
+  Status:  FIXED 2026-03-18
+
+### §N.4.2 — New Stages
+
+Stage 2.5: HF artifact scrubber
+  Removes bfloat16 quantization noise (12-20kHz band)
+  Method: spectral subtraction from noise floor estimate (first 200ms)
+
+Stage 14.5: Adaptive Vocal Prominence Boost
+  VocalRatioAnalyzer: measures vocal/instrumental energy ratio via FFT
+  VocalProminenceBoost: applies +0..+6dB FFT EQ if vocal is buried
+  Bypass: ambient, edm, house, techno, jazz, classical
+
+### §N.4.3 — Post-Generation Enhancement
+
+DisCoder re-vocoding (optional, enable_discoder=True):
+  MUSHRA score: 88.14 vs HiFiGAN 78.97 (ICASSP 2025)
+  Applied in sdk.py BEFORE mastering chain
+  §INV-DISC-4: passthrough on error
+
+### §N.4.4 — Prompt Taxonomy (1049 entries)
+
+cli/prompt_taxonomy.py:
+  57 hand-crafted base entries across 15+ genre categories
+  992 auto-generated variants (energy x production cross)
+  Total: 1049 entries, 573 vocabulary tokens
+  TF-IDF cosine similarity search (pure numpy, deterministic)
+  build_caption() uses as fallback for unknown genres
+
+
+---
+
+## §LLM — QWEN-МОДЕЛИ: ИНВАРИАНТЫ И СТАТУС
+
+```
+§INV-OFFLINE распространяется на ВСЕ from_pretrained() вызовы:
+  local_files_only=True ОБЯЗАТЕЛЕН везде — исключения не допускаются.
+
+  СТАТУС на 2026-03-20:
+  ┌─────────────────────────────┬──────────────────────┬──────────────────┐
+  │ Модель                      │ Подключение          │ local_files_only │
+  ├─────────────────────────────┼──────────────────────┼──────────────────┤
+  │ Qwen3-0.6B (qwen3_lm)       │ llm_mastering_advisor│ ✓ OK             │
+  │ Qwen3.5-0.8B (Qwen3.5-0.8B) │ n4_macro_planner     │ ✓ FIXED 2026-03-20│
+  │ prompt_taxonomy (TF-IDF)    │ transient/neural_eq  │ N/A (no model)   │
+  │ N3.G Qwen3.5-4B             │ DEFERRED             │ N/A              │
+  └─────────────────────────────┴──────────────────────┴──────────────────┘
+
+  ВАЖНО: prompt_taxonomy ≠ LLM. Это TF-IDF 1049 записей, CPU-only.
+  НЕ называть "taxonomy LLM" в документации или комментариях кода.
+```
+
+---
+
+## §STEREO — DAFx-24 STEREO WIDENER INVARIANTS
+
+```
+§INV-SW-1: output length == input length
+§INV-SW-2: LF (≤120Hz) ВСЕГДА mono (§P2.1 bass mono invariant)
+§INV-SW-3: ICC (Inter-Channel Coherence) ≥ 0.08 (mono compatibility)
+§INV-SW-4: passthrough on exception
+§INV-SW-5: deterministic — allpass coefficients frozen (seed=0)
+§INV-SW-6: energy Lipschitz L ≤ 1.2
+
+  Ссылка: Das, O. "An Open-Source Stereo Widening Plugin." DAFx-24, 2024.
+  Реализация: mastering/stereo.apply_stereoize_pro()
+  Allpass stages: Schroeder (1961), delays=[3,7,13,23,37,59,97,151] samples
+```
