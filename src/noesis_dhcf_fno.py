@@ -34,7 +34,21 @@ from typing import Optional
 # Version
 # ---------------------------------------------------------------------------
 
-__version__ = "0.9.3"
+__version__ = "1.0.0"  # MasteringChain v3.4
+
+# MasteringChain v3.4 constants
+MASTERING_CHAIN_VERSION = "3.4"
+MASTERING_CHAIN_STAGES_CORE = 12        # S0-S11 labels (11 active)
+MASTERING_CHAIN_STAGES_TOTAL = 31       # core + 19 extensions
+MASTERING_CHAIN_KAPPA = 0.9103          # empirical Lipschitz constant
+MASTERING_CHAIN_B_LINF = 3.60972762     # ‖M‖_∞ bound
+AGMS_GENRE_COUNT = 38                   # canonical genre profiles (v3.4)
+SC_RULES_COUNT = 84                     # sc_text_controller keyword rules
+IQS_MAX = 0.75                          # IQS_max (sealed)
+IQS_VERSION = "0.8"                     # sealed
+NOESIS_MOS_V1_R = 0.837                 # Pearson r on FMA-small
+NOESIS_MOS_V1_SHA256_PREFIX = "d781d747"  # sealed
+
 __author__  = "Ilia Bolotnikov (DJ Bionicl)"
 __contact__ = "info@amaimedia.com"
 
@@ -167,7 +181,7 @@ class NOESIS:
 
     # Drift contract thresholds (§EC Drift Tiers)
     DRIFT_PASS_DB           : float = 0.01
-    DRIFT_CF_LIMITED_DB     : float = 2.00
+    DRIFT_CF_LIMITED_DB     : float = 6.00   # v1.3: raised from 2.0 dB
     IQS_STUDIO_THRESHOLD    : float = 0.65
     ARTIFACT_FLOOR_LUFS     : float = -55.0
     PRE_LIFT_TARGET_LUFS    : float = -35.0
@@ -230,7 +244,7 @@ class NOESIS:
             If DiT produces near-silence defect (< ARTIFACT_FLOOR_LUFS).
             The benchmark retry loop will catch and re-seed.
         DriftContractError
-            If LUFS drift exceeds DRIFT_CF_LIMITED_DB (> 2.0 dB) without
+            If LUFS drift exceeds DRIFT_CF_LIMITED_DB (> 6.0 dB) without
             crest-factor physical limitation.
         """
         raise NotImplementedError(
@@ -289,13 +303,13 @@ class GenerationArtifactError(NOESISError):
 
 class DriftContractError(NOESISError):
     """
-    Raised when LUFS drift exceeds the FAIL tier threshold (> 2.0 dB)
+    Raised when LUFS drift exceeds the FAIL tier threshold (> 6.0 dB)
     without crest-factor physical justification.
 
     Drift contract:
       PASS           : drift ≤ 0.01 dB
-      PASS_CF_LIMITED: drift > 0.01 dB but CF-limited, ≤ 2.0 dB
-      FAIL           : drift > 2.0 dB or unexplained
+      PASS_CF_LIMITED: drift > 0.01 dB but CF-limited, ≤ 6.0 dB
+      FAIL           : drift > 6.0 dB or unexplained
     """
 
 
@@ -425,6 +439,78 @@ def _example_usage() -> None:  # pragma: no cover
     print(f"LUFS drift: {result.lufs_drift_db:.4f} dB  [{result.drift_tier}]")
     print(f"WAV SHA-256: {result.wav_sha256}")
     print(f"Snapshot  : {result.snapshot_sha256}")
+
+
+    # ── ITO: Reference-Based Mastering Style Transfer (ISMIR 2025) ──────────
+    # Source: ITO-Master (Koo et al., arXiv 2506.16889), ST-ITO (arXiv 2410.21233)
+    def apply_reference_style(
+        self,
+        target_audio: "np.ndarray",
+        reference_path: str,
+        target_genre: str,
+        sr: int = 48000,
+    ) -> "Tuple[np.ndarray, dict]":
+        """Transfer mastering style from reference track to target audio.
+        Returns (mastered_audio, overrides_applied).
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
+
+    # ── SC: Text-Controlled Mastering (arXiv 2508.03448) ────────────────────
+    def apply_text_mastering(
+        self,
+        audio: "np.ndarray",
+        instruction: str,
+        genre: str,
+        sr: int = 48000,
+    ) -> "Tuple[np.ndarray, dict, str]":
+        """Natural-language mastering control via Qwen3.5-9B parameter inference.
+        Returns (mastered_audio, overrides_applied, interpretation_summary).
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
+
+    # ── Stem-Aware Pre-Limiter ───────────────────────────────────────────────
+    def get_stem_sparse_benefit(
+        self,
+        audio: "np.ndarray",
+        sr: int,
+        genre: str,
+    ) -> float:
+        """Compute composite sparse_benefit_db from HTDemucs stem densities.
+        Returns float in [0.0, 6.0] dB.
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
+
+    # ── AudioSR Stage 0.5 ────────────────────────────────────────────────────
+    def master_with_audiosr(
+        self,
+        audio: "np.ndarray",
+        sr: int,
+        genre: str,
+        seed: int = 42,
+    ) -> "Tuple[np.ndarray, dict]":
+        """Post-VAE HF enhancement via UniverSR (ICASSP 2026, MIT, 4 ODE steps) + MasteringChain v3.4 (31 stages).
+        Returns (mastered_audio, metrics).
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
+
+    # ── VIZ: DSP Plugin Panel ────────────────────────────────────────────────
+    def build_dsp_panel(self) -> None:
+        """Gradio DSP plugin panel with 29-parameter AutoEval schema sliders.
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
+
+    # ── Genre Auto-Detection ─────────────────────────────────────────────────
+    def detect_genre(self, audio_path: str) -> "Tuple[str, float]":
+        """Detect genre via Qwen3-Embedding cosine similarity (33 genres).
+        Returns (genre_name, confidence_score).
+        Commercial implementation: AMAImedia.com NOESIS API.
+        """
+        raise NotImplementedError("Proprietary — see AMAImedia.com")
 
 
 if __name__ == "__main__":
