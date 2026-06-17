@@ -9,7 +9,7 @@ repository-artifact: "https://github.com/AMAImedia/noesis-dhcf-fno"
 url: "https://amaimedia.com"
 abstract: >
   NOESIS is a proprietary AI platform for global video. Its flagship dubbing engine
-  re-voices film, series, and creator content into 600+ languages while preserving each
+  re-voices film, series, and creator content into 201 languages while preserving each
   actor's voice, separating up to 20 speakers, and locking lip-sync to within ±50 ms.
   The platform also provides voice cloning, automated video editing, music, and image
   generation. This repository is public documentation only; the technology is proprietary.

@@ -5,11 +5,11 @@ demo reels) or interviews: **info@amaimedia.com**.
 
 ## One-liner
 NOESIS by amaimedia is a cinema-grade AI dubbing and creative-media platform — dub any
-video into 600+ languages while keeping every actor's real voice, emotion, and timing.
+video into 201 languages while keeping every actor's real voice, emotion, and timing.
 
 ## Boilerplate (50 words)
 NOESIS, by amaimedia, is an AI platform for global video. Its flagship dubbing engine
-re-voices film, series, and creator content into 600+ languages — preserving each actor's
+re-voices film, series, and creator content into 201 languages — preserving each actor's
 voice, separating up to 20 speakers, and locking lip-sync to ±50 ms. The platform also
 offers voice cloning, video editing, music, and image generation.
 
@@ -19,7 +19,7 @@ offers voice cloning, video editing, music, and image generation.
 | Company | amaimedia |
 | Product | NOESIS |
 | Flagship | AI video dubbing |
-| Languages | 600+ |
+| Languages | 201 (dubbing) · 600+ (voice) |
 | Speakers per title | up to 20 |
 | Lip-sync | ±50 ms |
 | Translation quality | COMET ≈ 0.88 (FLORES-200) |

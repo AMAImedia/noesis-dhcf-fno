@@ -21,7 +21,7 @@ greedy decoding, neural-metric primary.*
 
 | Property | Value |
 |---|---|
-| Languages | **600+** |
+| Languages | **201** dubbing (600+ voice cloning) |
 | Speakers per title | up to **20** (auto-separated) |
 | Lip-sync accuracy | **±50 ms** to source |
 | Voice fidelity | **48 kHz**, identity-preserving |

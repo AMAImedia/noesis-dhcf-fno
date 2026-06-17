@@ -4,7 +4,7 @@ High-level direction for the NOESIS platform. Dates and scope are indicative and
 intentionally non-specific — we publish direction, not internal plans.
 
 ## Now
-- **Dubbing** — multi-speaker, lip-synced, 600+ languages, distribution-grade masters.
+- **Dubbing** — multi-speaker, lip-synced, 201 languages, distribution-grade masters.
 - **Voice / Video edit / Music / Image** — live on the platform and API.
 
 ## Next

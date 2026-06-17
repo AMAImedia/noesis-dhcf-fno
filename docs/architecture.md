@@ -31,7 +31,7 @@ are proprietary and represented here only as opaque components.
 
 - **Job-based** — every request is submit → poll → retrieve; nothing blocks.
 - **Quality-gated** — outputs are verified before delivery, with automatic retries.
-- **Engine-agnostic surface** — the public API never exposes which engine or model runs underneath.
+- **Engine-agnostic surface** — the platform never exposes which engine or model runs underneath.
 - **Identity-preserving** — voices, actors, and brand stay intact across languages.
 
 > The diagram intentionally stops at the component boundary. Model architectures, training

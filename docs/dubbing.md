@@ -15,7 +15,7 @@ title the way a professional dubbing studio does — per actor, per scene, with 
 | Speakers | mono | **multi-speaker, up to 20** |
 | Timing | drifts | **locked to source ±50 ms** |
 | Music / ambience | lost or muddied | **preserved** |
-| Languages | a handful | **600+** |
+| Languages | a handful | **201** |
 
 ## What it does (black-box overview)
 
@@ -40,17 +40,15 @@ distribution-ready master, not a draft.
 
 ## Languages & scale
 
-- **600+ languages** supported.
+- **201 languages** supported for dubbing (voice cloning reaches 600+).
 - **Up to 20 speakers** per title, separated automatically.
+- **C2PA-signed** output for provenance.
 - Long-form ready: full episodes and films, not just clips.
 
 ## Use it
 
-Via the platform UI at [amaimedia.com](https://amaimedia.com), or the API:
+Upload, pick a target language, and download the dubbed master — right on
+**[amaimedia.com](https://amaimedia.com)**. Pricing is per minute, per language; you spend
+from one shared token pool used across every tool.
 
-```
-POST dub_video { file_url, target_lang, quality }  → job_id
-GET  job_status { job_id }                          → progress + result_url
-```
-
-See [api-reference.md](api-reference.md) · [benchmarks.md](benchmarks.md).
+See [pricing.md](pricing.md) · [features.md](features.md) · [benchmarks.md](benchmarks.md).

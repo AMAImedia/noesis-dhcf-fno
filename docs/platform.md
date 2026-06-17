@@ -6,7 +6,7 @@ foundation powers voice, video, music, and image — orchestrated through one as
 ## Surfaces
 
 ### 🎬 Dubbing — *flagship*
-Multi-speaker, lip-synced video dubbing in 600+ languages, each actor's voice preserved.
+Multi-speaker, lip-synced video dubbing in 201 languages, each actor's voice preserved.
 → [dubbing.md](dubbing.md)
 
 ### 🗣️ Voice
@@ -39,7 +39,7 @@ it's returned.
 
 - **Quality bar set for distribution**, not demos.
 - **Identity-preserving** — your voice, your actors, your brand.
-- **Global by default** — 600+ languages.
+- **Global by default** — 201 dubbing languages, 600+ for voice cloning.
 - **Proprietary engines** — the *what* is documented here; the *how* stays in-house.
 
-→ Quality results: [benchmarks.md](benchmarks.md) · API: [api-reference.md](api-reference.md)
+→ Features: [features.md](features.md) · Pricing: [pricing.md](pricing.md) · Quality: [benchmarks.md](benchmarks.md)
