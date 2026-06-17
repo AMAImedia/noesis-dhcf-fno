@@ -1,70 +1,20 @@
-# Python
-__pycache__/
-*.py[cod]
-*.so
-
-# Virtual environments
-.venv/
-venv/
-env/
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Build / packaging
-build/
-dist/
-*.egg-info/
-
-# Logs
-*.log
-logs/
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Experiment outputs
-runs/
-outputs/
-results/
-experiments/
-
-# Generated artifacts
-artifacts/
-snapshots/
-benchmarks/output/
-
-# Audio / media
-*.wav
-*.mp3
-*.flac
-
-# Models / checkpoints
-models/
-checkpoints/
-weights/
-*.pt
-*.pth
+# This repo is documentation only — never commit code, models, or secrets.
+*.py
+*.ipynb
+*.env
+.env*
+*.key
+*.pem
 *.ckpt
 *.safetensors
-
-# Datasets
-data/
-datasets/
-
-# Cache
-.cache/
-ruff_cache/
-mypy_cache/
-
-# HuggingFace / Torch cache
-.huggingface/
-torch_cache/
-
-# Environment variables
-.env
+*.gguf
+*.pt
+*.pth
+*.wav
+*.mp4
+*.mkv
+__pycache__/
+.venv/
+node_modules/
+# Allow docs assets explicitly if added under PRESS_KIT/assets/
+!PRESS_KIT/**

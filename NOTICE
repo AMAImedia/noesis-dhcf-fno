@@ -1,0 +1,41 @@
+NOTICE — Trademarks, Trade Secrets, and Attribution
+====================================================
+
+© 2026 amaimedia. All rights reserved.
+
+TRADEMARKS
+----------
+The following are trademarks of amaimedia and may not be used without written
+permission:
+
+  • NOESIS™
+  • amaimedia™
+  • NOESIS Dubbing™, NOESIS Voice™, NOESIS Music™, NOESIS Image™
+  • the NOESIS / amaimedia logos, wordmarks, and visual identity
+
+Product, engine, and feature names appearing in this repository are trademarks
+or trade names of amaimedia. Their appearance here does not grant any license
+to use them.
+
+TRADE SECRETS
+-------------
+The models, model weights, architectures, training methods, datasets, prompts,
+pipelines, quality systems, and engine internals behind NOESIS are confidential
+trade secrets of amaimedia. They are intentionally NOT disclosed in this
+repository. Any description here is high-level and product-level only.
+
+NO REVERSE ENGINEERING / NO CLONING
+-----------------------------------
+Nothing in this repository may be used to reproduce, reconstruct, or build a
+competing product, service, or model. The capability claims and results
+published here describe outcomes, not implementations.
+
+THIRD PARTY
+-----------
+NOESIS is built on a combination of proprietary and third-party components.
+Third-party components are used under their respective licenses; their identities
+are not part of this public documentation.
+
+CONTACT
+-------
+Licensing, press, partnership: info@amaimedia.com

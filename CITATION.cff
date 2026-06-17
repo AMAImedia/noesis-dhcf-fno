@@ -1,36 +1,23 @@
-# NOESIS DHCF-FNO — CITATION.cff
-# Full path: noesis-dhcf-fno/CITATION.cff
-# Author: Ilia Bolotnikov / AMAImedia
 cff-version: 1.2.0
-message: "If you use this framework or reference this work, please cite as below."
+title: "NOESIS — AI dubbing & creative-media platform by amaimedia"
+message: "If you reference NOESIS, please cite the platform as below."
 type: software
-title: "NOESIS: Deterministic Hybrid Control Framework over Frozen Neural Operator with Objective-locked Optimization (DHCF-FNO)"
 authors:
-  - family-names: Bolotnikov
-    given-names: Ilia
-    affiliation: AMAImedia
-    email: info@amaimedia.com
-    website: https://amaimedia.com
-version: "0.9"
-date-released: "2026-03-07"
-url: "https://github.com/AMAImedia/noesis-dhcf-fno"
-repository-code: "https://github.com/AMAImedia/noesis-dhcf-fno"
-license: "Proprietary"
+  - name: "amaimedia"
+    website: "https://amaimedia.com"
+repository-artifact: "https://github.com/AMAImedia/noesis-dhcf-fno"
+url: "https://amaimedia.com"
+abstract: >
+  NOESIS is a proprietary AI platform for global video. Its flagship dubbing engine
+  re-voices film, series, and creator content into 600+ languages while preserving each
+  actor's voice, separating up to 20 speakers, and locking lip-sync to within ±50 ms.
+  The platform also provides voice cloning, automated video editing, music, and image
+  generation. This repository is public documentation only; the technology is proprietary.
 keywords:
-  - deterministic audio generation
-  - frozen neural operator
-  - diffusion model control
-  - audio mastering
-  - reproducible machine learning
-  - DHCF-FNO
-  - IQS quality score
-preferred-citation:
-  type: unpublished
-  title: "NOESIS: Deterministic Hybrid Control Framework over Frozen Neural Operator with Objective-locked Optimization (DHCF-FNO)"
-  authors:
-    - family-names: Bolotnikov
-      given-names: Ilia
-      affiliation: AMAImedia
-  year: 2026
-  notes: "Submitted to IEEE Transactions on Audio, Speech, and Language Processing"
-  url: "https://github.com/AMAImedia/noesis-dhcf-fno"
+  - "AI dubbing"
+  - "voice cloning"
+  - "video localization"
+  - "speech synthesis"
+  - "creative media"
+license: LicenseRef-Proprietary
+date-released: "2026-06-17"

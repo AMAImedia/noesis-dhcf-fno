@@ -1,199 +1,96 @@
-[README.md](https://github.com/user-attachments/files/26134313/README.md)
-# NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
+<div align="center">
 
-<!-- NOESIS — Deterministic Hybrid Control Framework for Frozen Neural Operators (DHCF-FNO)
-Copyright (c) 2026 AMAImedia.com
-All rights reserved.
-Full path: noesis-dhcf-fno/README.md -->
+# NOESIS — by amaimedia
 
-> **The framework operates without modifying neural network weights.**
+### Cinema-grade AI dubbing & a full creative media platform.
 
-📄 **Paper:** [PDF](https://github.com/AMAImedia/noesis-dhcf-fno/blob/main/paper/noesis_dhcf_fno_arxiv.pdf)
+[![Platform](https://img.shields.io/badge/platform-amaimedia.com-7c3aed)](https://amaimedia.com)
+[![Dubbing](https://img.shields.io/badge/AI%20dubbing-600%2B%20languages-a78bfa)](docs/dubbing.md)
+[![Speakers](https://img.shields.io/badge/multi--speaker-up%20to%2020-f472b6)](docs/dubbing.md)
+[![Lip-sync](https://img.shields.io/badge/lip--sync-%C2%B150ms-f59e0b)](docs/dubbing.md)
+[![License](https://img.shields.io/badge/license-proprietary-0a0a0b)](LICENSE)
+
+**Dub any video into 600+ languages — keeping every actor's real voice, emotion, and timing.**
+Plus voice cloning, music, image, and video tools in one platform.
+
+[Watch the dubbing demo](#) · [Platform](docs/platform.md) · [Benchmarks](docs/benchmarks.md) · [API](docs/api-reference.md)
+
+</div>
 
 ---
 
-# 🏆 R.REF2 Benchmark (2026-03-14, MasteringChain v3.4)
+> **What this repository is.** A public overview of the NOESIS platform by amaimedia —
+> capabilities, quality results, and the public API. It is **not** the source code.
+> The models, pipelines, training methods, and engines are proprietary and not published here.
+> See [LICENSE](LICENSE) and [NOTICE](NOTICE).
 
-All 9/10 genres: PASS or CF\_Limited drift contract (≤6.0 dB).
-$\overline{\mathrm{IQS}}=0.614$, $\overline{J}=0.388$, MasteringChain v3.4 (31 stages).
+---
 
-**R.REF4 GPU target:** $\overline{J}>0.40$, 10/10 genres, ~2026-03-21.
+## 🎯 The hero: AI dubbing
 
-# Phase R.1 — Historical Result
+NOESIS dubs film, series, and online video at a quality bar built for real distribution —
+not a robotic voiceover. The dubbing engine:
 
-## Benchmark Summary
+- **Preserves each actor's voice.** Per-speaker voice cloning keeps timbre and identity in the target language.
+- **Handles real scenes.** Automatic multi-speaker separation, up to **20 speakers** per title.
+- **Stays in sync.** Timing locked to the source within **±50 ms** for natural lip-sync feel.
+- **Speaks the world.** **600+ languages** out of the box.
+- **Keeps the mix.** Music and ambience are preserved; only the dialogue is re-voiced.
 
-| Phase | PASS | PASS_CF_LIMITED | IQS Mean | Max LUFS Drift |
-|------|------|----------------|---------|---------------|
-| R.0 | 0 | 10 | 0.4947 | 1.609 dB |
-| R.1 | 10 | 0 | 0.7027 | 0.0078 dB |
+→ Full overview: **[docs/dubbing.md](docs/dubbing.md)**
 
-## Improvements
+## 🧩 The platform
 
-Drift reduction:
-1.609 dB → 0.0078 dB  
-Reduction factor: **206×**
-
-IQS improvement:
-0.4947 → 0.7027  
-Increase: **+42%**
-
-All tracks moved from PASS_CF_LIMITED → PASS.
-
-## Key Case
-
-metal genre:
-
-before:
-drift = 1.609 dB
-
-after:
-drift = 0.0055 dB
-
-This confirms the expected behavior of **Stage 8.5 v4** limiter architecture.
-
-## Conclusion
-
-Stage 8.5 v4 successfully stabilizes LUFS drift and improves perceptual quality across all tested genres.
-
-The system now satisfies deterministic mastering constraints required by the NOESIS protocol.
-
-## Research Status
-
-| Item | Status |
+| Surface | What it does |
 |---|---|
-| IEEE TASLP submission | In preparation |
-| Architecture specification | ✓ Published |
-| Phase-R benchmark results | ✓ Available |
-| Reproducibility protocol | ✓ Appendix F |
-| Core implementation | Commercial license |
+| 🎬 **Dubbing** | Multi-speaker, lip-synced video dubbing in 600+ languages |
+| 🗣️ **Voice** | Clone a voice from 5–30 s and synthesize 48 kHz speech, multilingual |
+| ✂️ **Video edit** | Auto-cut long video into vertical Shorts/Reels with hooks, titles, subtitles |
+| 🎵 **Music** | Generate original music from a text prompt |
+| 🖼️ **Image** | Generate images from a text prompt |
+| 💬 **Assistant** | Orchestrates the above through one conversational interface |
 
----
+→ Details: **[docs/platform.md](docs/platform.md)**
 
-## Key Results
+## 📊 Quality, measured
 
-| Metric | Value |
+We publish **results**, not recipes.
+
+| Capability | Result |
 |---|---|
-| LUFS drift (all genres) | **0.0000 dB** |
-| Mastering Lipschitz κ | **0.9103 < 1** (certified stable) |
-| IQS v0.8 mean ± std | **0.687 ± 0.051** |
-| 95% CI (IQS) | [0.678, 0.730] |
-| Mastering latency | ~353 ms (CPU, constant) |
-| Determinism tests | **99/99 bitwise-identical** |
+| Translation quality | **COMET ≈ 0.88** on FLORES-200, competitive with leading MT systems |
+| Languages | **600+** |
+| Speakers per title | up to **20** |
+| Lip-sync accuracy | **±50 ms** to source |
+| Voice output | **48 kHz**, identity-preserving |
 
-The system produces bitwise-identical waveforms across repeated runs
-and across GPU hardware generations (SHA-256 verified, 297 runs).
+→ Methodology & full table: **[docs/benchmarks.md](docs/benchmarks.md)**
 
----
+## 🔌 API
 
-## Baseline Comparison
+A simple job-based API: submit, poll, retrieve. Dubbing, voice, video-edit, music, image.
 
-| Model | LUFS σ (dB) ↓ | Blind-SNR (dB) ↑ | Deterministic | Stable (κ<1) |
-|---|---|---|---|---|
-| DiffWave | 3.8 | 16.3 | ✗ | ✗ |
-| MusicGen | 4.2 | 18.1 | ✗ | ✗ |
-| Stable Audio 2 | 2.9 | 19.2 | ✗ | ✗ |
-| YuE | 3.1 | 19.8 | ✗ | ✗ |
-| Muse | 1.4 | 18.4 | partial | ✗ |
-| **NOESIS (ours)** | **0.0000** | **22.1** | **✓** | **✓ (κ=0.9103)** |
-
-LUFS σ = inter-run loudness standard deviation; lower is better.  
-Blind-SNR after Hu et al. (2022); higher is better.
-
----
-
-## Sensitivity Analysis
-
-J exceeds the studio threshold (≥ 0.65) over:
-- σ-slope ∈ [0.76, 1.08] (nominal: 0.95)
-- guidance-scale ∈ [1.8, 6.4] (nominal: 4.0)
-
-Maximum variation ΔJ = 0.056, consistent with the Lipschitz bound
-(Proposition J-Lip, Appendix C). Wide operational basin — robust to
-conditioning parameter variation.
-
----
-
-## Performance (30 s audio generation)
-
-| GPU | Total Time | Real-Time Factor | VRAM |
-|---|---|---|---|
-| A100 80 GB | 13.6 s | 0.45× | 13 GB |
-| RTX 4090 | 21.1 s | 0.70× | 15 GB |
-| RTX 4080 | 25.3 s | 0.84× | 15 GB |
-| RTX 3090 | 31.8 s | 1.06× | 15 GB |
-| RTX 3060 12 GB | 48.6 s | 1.62× | 11 GB |
-| RTX 3060 6 GB (--low-vram) | 58.8 s | 1.96× | 6 GB |
-| RTX 2060 (--low-vram) | 75.0 s | 2.50× | 6 GB |
-
-All: `bfloat16`, `fix_nfe=8`, 99/99 determinism verified.
-
----
-
-## Repository Contents
-
-### Research materials (public)
-- `paper/` — architecture specification and benchmark results
-- `docs/BENCHMARK_RESULTS.md` — Phase-R reproducibility dashboard
-- IQS v0.8 formula and weight checksums
-- Snapshot v16 telemetry format specification
-
-### Commercial components (not included)
-- DSP mastering chain, IQS scoring engine, optimizer runtime, operator registry
-
-Available under commercial licensing — contact info@amaimedia.com.
-
----
-
-## Reproducibility
-
-```bash
-export CUBLAS_WORKSPACE_CONFIG=:4096:8
-python run_phase_r.py --mode studio --seed 42 --genre ambient
+```
+POST  dub_video      { file_url, target_lang, quality }      → job_id
+GET   job_status     { job_id }                              → progress + result_url
 ```
 
-See **Appendix F** of the paper for the complete step-by-step protocol.
+→ Full reference: **[docs/api-reference.md](docs/api-reference.md)**
+
+## 🏛️ How it fits together
+
+A high-level view of the platform — engines are black boxes by design.
+
+→ **[docs/architecture.md](docs/architecture.md)**
 
 ---
 
-## Citation
+## About
 
-```bibtex
-@unpublished{bolotnikov2026noesis,
-  title  = {{NOESIS}: {D}eterministic {H}ybrid {C}ontrol {F}ramework
-             over {F}rozen {N}eural {O}perator with
-             {O}bjective-locked {O}ptimization ({DHCF-FNO})},
-  author = {Bolotnikov, Ilia},
-  year   = {2026},
-  note   = {Submitted to {IEEE} Trans.\ Audio, Speech, Language Process.},
-  url    = {https://github.com/AMAImedia/noesis-dhcf-fno}
-}
-```
+NOESIS is built by **[amaimedia](https://amaimedia.com)**. Product names, engine names,
+designs, and methods are trademarks and trade secrets of amaimedia. This repository
+documents the product; it does not license the underlying technology.
 
----
+**Contact:** info@amaimedia.com · **Press:** see [PRESS_KIT/](PRESS_KIT/)
 
-*© 2026 AMAImedia · Ilia Bolotnikov · info@amaimedia.com*
-
-## Architecture State (2026-03-21)
-
-| Component | Version | Notes |
-|-----------|---------|-------|
-| MasteringChain | v3.4, 31 stages | Ozone 12 parity 11/11 |
-| IQS | v0.8, sealed | checksums 9097e760 / 12c2f47c |
-| NOESIS-MOS | v1, r=0.837 | FMA-small pseudo-labels |
-| Genre profiles | 38 canonical | +phonk/hyperpop/darkwave/shoegaze/... |
-| SC text rules | 84 keyword rules | EDM/vocal/emotional/platform |
-| Taxonomy | 1049+55 entries | TF-IDF + Qwen3.5-0.8B fallback |
-| SVC | v1.0, step 6000 | Seed-VC, f0_condition=True |
-| DisCoder | MUSHRA 88.14 | ICASSP 2025, post-chain re-vocoder |
-| Caption LoRA | training | Qwen3.5-0.8B, 579 pairs, ~2h CPU |
-
-## Benchmark History
-
-| Date | IQS_mean | J_mean | Chain | Notes |
-|------|----------|--------|-------|-------|
-| 2026-03-12 | 0.524 | 0.315 | v1.8 (22 stages) | R.REF3, post-CFG-fix |
-| 2026-03-14 | 0.614 | 0.388 | v3.4 (31 stages) | R.REF2, FAD(PANN) wired |
-| ~2026-03-21 | >0.62 | >0.40 | v3.4 | R.REF4 GPU target |
-
-
+© 2026 amaimedia. All rights reserved.
